@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import data.Address;
+import data.Receipt;
+
 public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
 
-	public  void setFileToAppend(File fileToAppend) {
-		
-		this.fileToAppend = fileToAppend;
-		
-	}
+	
 
-	public void appendFile(){
+
+	/*public void appendFile(){
 		System.out.println("Mpike sto TXT");
 		System.out.println(fileToAppend.getAbsolutePath());
 
@@ -118,5 +118,17 @@ public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	*/
 
+	@Override
+	public void setReceipt(Receipt receipt) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setReceipt'");
+	}
+
+	@Override
+	public void setAddress(Address address) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setAddress'");
+	}
 }

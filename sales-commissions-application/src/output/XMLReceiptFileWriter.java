@@ -14,14 +14,21 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import data.Address;
+import data.Receipt;
+
 public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 
-public  void setFileToAppend(File fileToAppend) {
+	public  void setFileToAppend(File fileToAppend) {
 		
-		this.fileToAppend = fileToAppend;
+			this.fileToAppend = fileToAppend;
+		
+		}
+
+	public void appendFile(){
 		
 	}
-	public void appendFile(){
+	/*public void appendFile(){
 
 		try{
 		
@@ -134,5 +141,30 @@ public  void setFileToAppend(File fileToAppend) {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	@Override
+	public void setReceipt(Receipt receipt) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setReceipt'");
+	}
+	@Override
+	public void setAddress(Address address) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setAddress'");
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	@Override
+	public void setReceipt(Receipt receipt) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setReceipt'");
+	}
+	@Override
+	public void setAddress(Address address) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setAddress'");
+	}this.number = number;
+	}
+	*/
 
 }
