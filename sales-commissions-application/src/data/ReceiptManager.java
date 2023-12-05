@@ -4,12 +4,16 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 
+import output.AbstractReceiptFileWriter;
+import output.TXTReceiptFileWriter;
+import output.XMLReceiptFileWriter;
+
 public class  ReceiptManager{
 	private String name;
 	private String afm;
 	//private Vector <Receipt> allReceipts;
 	private List <Receipt> allReceipts;
-	private FileAppender fileAppender;
+	private AbstractReceiptFileWriter ReceiptFileWriter;
 	
 	
 	public ReceiptManager(){
@@ -18,10 +22,10 @@ public class  ReceiptManager{
 	
 	public void setFileType(String fileType) {
 		if(fileType.equals("TXT")) {
-			fileAppender = new FileAppenderTXT();
+			ReceiptFileWriter = new TXTReceiptFileWriter();
 		}	
 		else {
-			fileAppender = new FileAppenderXML();
+			ReceiptFileWriter = new XMLReceiptFileWriter();
 		}	
 	}
 
@@ -91,8 +95,8 @@ public class  ReceiptManager{
 		this.afm = afm;
 	}
 
-	public FileAppender getFileAppender() {
-		return fileAppender;
+	public AbstractReceiptFileWriter getFileAppender() {
+		return ReceiptFileWriter;
 	}
 
 }

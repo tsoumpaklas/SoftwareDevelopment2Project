@@ -1,18 +1,14 @@
-package data;
+package output;
 
 import java.io.File;
 
+import data.Receipt;
 
 
-public abstract class FileAppender {
+public abstract class AbstractReceiptFileWriter {
 
-	protected File fileToAppend;
-	protected String receiptID;
-	protected String date;
-	protected String kind;
-	protected String sales;
-	protected String items;
-	protected String company;
+	protected File fileToWrite;
+	protected Receipt receipt;
 	protected String country;
 	protected String city;
 	protected String street;

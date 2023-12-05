@@ -1,10 +1,10 @@
-package data;
+package output;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileAppenderTXT extends FileAppender{
+public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
 
 	public  void setFileToAppend(File fileToAppend) {
 		
