@@ -4,7 +4,7 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Agent {
+public class  ReceiptManager{
 	private String name;
 	private String afm;
 	//private Vector <Receipt> allReceipts;
@@ -12,7 +12,7 @@ public class Agent {
 	private FileAppender fileAppender;
 	
 	
-	public Agent(){
+	public ReceiptManager(){
 		allReceipts = new ArrayList<>();
 	}
 	
