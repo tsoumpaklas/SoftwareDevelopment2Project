@@ -16,6 +16,15 @@ public class  ReceiptManager{
 		allReceipts = new ArrayList<>();
 	}
 	
+	public void setFileType(String fileType) {
+		if(fileType.equals("TXT")) {
+			fileAppender = new FileAppenderTXT();
+		}	
+		else {
+			fileAppender = new FileAppenderXML();
+		}	
+	}
+
 	public float calculateSalesForEachItem(String kind) {
 		float sumOfSpecificKind = 0;
 		for(int i = 0; i< allReceipts.size(); i++){
@@ -60,30 +69,7 @@ public class  ReceiptManager{
 
 		return 0;
 	}
-	/* 
 
-	public double calculateCommission(){
-		double commission = 0;
-		if( this.calculateTotalSales() > 6000 && this.calculateTotalSales()<= 10000){
-			commission = 0.1*(calculateTotalSales()-6000);
-		}
-		else if(this.calculateTotalSales() > 10000 && this.calculateTotalSales() <= 40000 ){
-			commission = (((calculateTotalSales() - 10000) * 0.15) + (10000*0.1));			
-		}
-		else if(this.calculateTotalSales() > 40000 ) {
-			commission = 10000*0.1 + 30000*0.15 + (calculateTotalSales() - 40000)*0.2;			
-		}
-		return commission;
-	}
-	 */
-	public void setFileType(String fileType) {
-		if(fileType.equals("TXT")){
-			fileAppender = new FileAppenderTXT();
-		}	
-		else{
-			fileAppender = new FileAppenderXML();
-		}	
-	}
 
 	public List<Receipt> getReceipts() {
 		return allReceipts;
