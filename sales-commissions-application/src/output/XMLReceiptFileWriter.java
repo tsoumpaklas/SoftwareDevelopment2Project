@@ -23,6 +23,14 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
      		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
     	    document = documentBuilder.parse(fileToWrite);
 
+			addContent();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+	public void addContent(){
 			Node root = document.getFirstChild();
             
 
@@ -39,11 +47,8 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 			createElementAndAppend(document, rootElement, "City", String.valueOf(address.getCity()));
 			createElementAndAppend(document, rootElement, "Street", String.valueOf(address.getStreet()));
 			createElementAndAppend(document, rootElement, "Number", String.valueOf(address.getStreetNumber()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	}
+	
 
     private void createElementAndAppend(Document doc, Element parent, String name, String content) {
       Element element = doc.createElement(name);
