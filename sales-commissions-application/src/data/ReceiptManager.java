@@ -11,8 +11,7 @@ import output.XMLReceiptFileWriter;
 public class  ReceiptManager{
 	private String name;
 	private String afm;
-	//private Vector <Receipt> allReceipts;
-	private List <Receipt> allReceipts;
+    private List <Receipt> allReceipts;
 	private AbstractReceiptFileWriter ReceiptFileWriter;
 	
 	

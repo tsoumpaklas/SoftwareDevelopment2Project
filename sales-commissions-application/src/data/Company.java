@@ -22,4 +22,7 @@ public class Company {
 			
 			return companyAddress;
 		}
+		public Address getAddress(){
+			return companyAddress;
+		}
 }

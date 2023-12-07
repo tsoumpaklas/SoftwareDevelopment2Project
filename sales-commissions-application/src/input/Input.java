@@ -3,20 +3,18 @@ package input;
 
 import java.io.File;
 
-import data.Agent;
-import data.Coat;
 import data.Receipt;
-import data.Shirt;
-import data.Skirt;
-import data.Trouser;
+import data.ReceiptManager;
 
 public abstract class Input {
 	
-	protected Agent agent;
+	protected ReceiptManager receiptManager;
 	protected File inputFile;
 	protected String inputFilePath;
+	//ReceiptManagerObject
 	protected String name;
 	protected String afm;
+	//ReceiptObject
 	protected int receiptID;
 	protected String date;
 	protected String kind;

@@ -43,10 +43,10 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 			createElementAndAppend(document, rootElement, "Sales", String.valueOf(receipt.getSales()));
 			createElementAndAppend(document, rootElement, "Items", String.valueOf(receipt.getItems()));
 			createElementAndAppend(document, rootElement, "Company", String.valueOf(receipt.getCompany()));
-			createElementAndAppend(document, rootElement, "Country", String.valueOf(address.getCountry()));
-			createElementAndAppend(document, rootElement, "City", String.valueOf(address.getCity()));
-			createElementAndAppend(document, rootElement, "Street", String.valueOf(address.getStreet()));
-			createElementAndAppend(document, rootElement, "Number", String.valueOf(address.getStreetNumber()));
+			createElementAndAppend(document, rootElement, "Country", String.valueOf(receipt.getCompany().getAddress().getCountry()));
+			createElementAndAppend(document, rootElement, "City", String.valueOf(receipt.getCompany().getAddress().getCity()));
+			createElementAndAppend(document, rootElement, "Street", String.valueOf(receipt.getCompany().getAddress().getStreet()));
+			createElementAndAppend(document, rootElement, "Number", String.valueOf(receipt.getCompany().getAddress().getStreetNumber()));
 	}
 	
 
