@@ -16,19 +16,21 @@ public abstract class AbstractReceiptFileWriter {
 	/*Address contains: country, city, street, streetNumber
 	  and phoneNumber */
 	protected Address address;
-	
+
+	protected void setFileToAppend(File fileToAppend) {
+		this.fileToWrite = fileToAppend;
+}
+
+
 	//This is the template method 
-	public void appendFile(){
-		setFileToAppend(fileToWrite);
-		openFile();
-		writeData();
-		closeFile();
+	public final void appendFile(){
+		createFile();
+		writeFile();
+		
 	}
-	public abstract void openFile();
-	public abstract void writeData();
-	public abstract void closeFile();
-	public abstract void setFileToAppend(File fileToAppend); 
-	public abstract void setReceipt(Receipt receipt);
-	public abstract void setAddress(Address address);
+
+	protected abstract void createFile();
+	protected abstract void writeFile();
+	
 }
 
