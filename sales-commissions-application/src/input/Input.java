@@ -8,37 +8,25 @@ import data.ReceiptManager;
 
 public abstract class Input {
 	
-	protected ReceiptManager receiptManager;
 	protected File inputFile;
 	protected String inputFilePath;
-	//ReceiptManagerObject
 	protected String name;
 	protected String afm;
-	//ReceiptObject
-	protected int receiptID;
-	protected String date;
-	protected String kind;
-	protected double sales;
-	protected int items;
-	protected String companyName;
-	protected String companyCountry;
-	protected String companyCity;
-	protected String companyStreet;
-	protected int companyStreetNumber;
+	//ReceiptManagerObject
+	protected ReceiptManager receiptManager;
 
 	public abstract void readFile();
 
-	
 	public Input() {
-		agent = new Agent();
+		receiptManager = new ReceiptManager();
 		kind  = new String("");
 	}
 	
 
 	
 	public void addAgent() {
-		agent.setName(name);
-		agent.setAfm(afm);
+		receiptManager.setName(name);
+		receiptManager.setAfm(afm);
 	}
 	
 	public void addReceipt( ){
