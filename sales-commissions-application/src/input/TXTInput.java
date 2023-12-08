@@ -9,117 +9,54 @@ import java.io.IOException;
 
 
 public class TXTInput extends Input{
-
-	public TXTInput(File recieptFileTXT){
-		this.inputFile = recieptFileTXT;
-		inputFilePath =  inputFile.getAbsolutePath();
-		
+	@Override
+	public void fileInput(File inputFile) {
+		super.fileInput(inputFile);
 	}
 	
 	@Override
-	public void readFile()  {
-		 BufferedReader br = null;
-	    try {
-	            	
-			br = new BufferedReader(new FileReader(inputFilePath));
-		} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-		}
-	    String line;
-	    try {
+	public void readFile() {
+		BufferedReader bufferedReader = null;
 
-			while ((line = br.readLine()) != null) {
-						
-				if(line.startsWith("Name:")){
-					name = (line.substring(line.indexOf(":") + 1).trim());
-					continue;
-				}	
-						
-				if(line.startsWith("AFM")){
-					afm = (line.substring(line.indexOf(":") + 1).trim());
-					addAgent();
-					continue;
-				}
-						
-				if(line.startsWith("Receipts")){
-	
-					continue;
-				}
-							
-				if(line.startsWith("Receipt ID")){
-					receiptID = (Integer.parseInt(line.substring
-					(line.indexOf(":") + 1).trim()));
-					continue;
-				}
-							
-				if(line.startsWith("Date")){
-								
-					date = (line.substring(line.indexOf(":") + 1).trim());
-					continue;
-				}
-							
-				if(line.startsWith("Kind")){
-								
-					kind = (line.substring(line.indexOf(":") + 1).trim());
-					continue;
-				}
-						
-				if(line.startsWith("Sales")){
-								
-					sales = (Double.parseDouble(line.substring
-					(line.indexOf(":") + 1).trim()));
-					continue;
-				}
-							
-				if(line.startsWith("Items")){
-								
-					items = (Integer.parseInt(line.substring
-					(line.indexOf(":") + 1).trim()));
-					continue;
-				}
-							
-													
-				if(line.startsWith("Company")){
-					companyName = (line.substring
-					(line.indexOf(":") + 1).trim());
-					continue;
-				}
-							
-				if(line.startsWith("Country")){
-					companyCountry =  (line.substring
-					(line.indexOf(":") + 1).trim());
-					continue;
-				}
-							
-				if(line.startsWith("City")){
-					companyCity =  (line.substring
-					(line.indexOf(":") + 1).trim());
-					continue;
-				}
-						
-				if(line.startsWith("Street")){
-					companyStreet =  (line.substring
-					(line.indexOf(":") + 1).trim());
-					continue;
-				}
-							
-				if(line.startsWith("Number")){
-					companyStreetNumber =  (Integer.parseInt
-					(line.substring(line.indexOf(":") + 1).trim()));
-					addReceipt();
-					continue;
-				}
-					
+		try {
+			bufferedReader  = new BufferedReader(new FileReader(inputFile));
+		} catch (FileNotFoundException firstException) {
+			firstException.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	    try {
-			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	
-	}
-	
+
+			String line;
+			try	{
+				while ((line = bufferedReader.readLine()) != null) {
+					String[] parts = line.split(" ");
+					if (parts[0].equals("Agent:")) {
+						name = parts[1];
+						afm = parts[2];
+					}
+					else if (parts[0].equals("Receipt:")) {
+						receiptID = Integer.parseInt(parts[1]);
+						date = parts[2];
+						sales = Integer.parseInt(parts[3]);
+						items = Integer.parseInt(parts[4]);
+						companyName = parts[5];
+						companyCountry = parts[6];
+						companyCity = parts[7];
+						companyStreet = parts[8];
+						companyStreetNumber = Integer.parseInt(parts[9]);
+					}
+					else if (parts[0].equals("Kind:")) {
+						kind = parts[1];
+					}
+				}
+			} catch (IOException secondException) {
+				secondException.printStackTrace();
+			}
+				
+			try{
+				bufferedReader.close();
+			} catch (IOException thirdException) {
+				thirdException.printStackTrace();
+			}
+
+	}	
+
 }
