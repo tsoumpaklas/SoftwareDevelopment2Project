@@ -34,11 +34,9 @@ public abstract class Input {
 	}
 	
 	
-	public final void template(){
+	public final void inputTemplate(){
 		fileInput(inputFile);
 		readFile();
-		addAgent();
-		addReceipt();
 	}
 
 	public void fileInput(File inputFile) {

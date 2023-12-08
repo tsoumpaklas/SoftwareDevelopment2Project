@@ -1,62 +1,76 @@
  package input;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
+public class TXTInput extends Input {
+    // ...
 
-public class TXTInput extends Input{
-	@Override
-	public void fileInput(File inputFile) {
-		super.fileInput(inputFile);
+    @Override
+    public void readFile() {
+        BufferedReader bufferedReader = initializeBufferedReader();
+        readAgentDetails(bufferedReader);
+		while(true) {
+			processReceiptLine(bufferedReader);
+			if (values.isEmpty()) {
+				break;
+    		}
+			fromListToVariables();
+			addReceipt();
+			values.clear();
+		}
 	}
-	
-	@Override
-	public void readFile() {
-		BufferedReader bufferedReader = null;
 
+    private void readAgentDetails(BufferedReader bufferedReader) {
 		try {
-			bufferedReader  = new BufferedReader(new FileReader(inputFile));
-		} catch (FileNotFoundException firstException) {
-			firstException.printStackTrace();
-			}
+			name = bufferedReader.readLine();
+			afm = bufferedReader.readLine();
+			addAgent();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-			String line;
-			try	{
-				while ((line = bufferedReader.readLine()) != null) {
-					String[] parts = line.split(" ");
-					if (parts[0].equals("Agent:")) {
-						name = parts[1];
-						afm = parts[2];
-					}
-					else if (parts[0].equals("Receipt:")) {
-						receiptID = Integer.parseInt(parts[1]);
-						date = parts[2];
-						sales = Integer.parseInt(parts[3]);
-						items = Integer.parseInt(parts[4]);
-						companyName = parts[5];
-						companyCountry = parts[6];
-						companyCity = parts[7];
-						companyStreet = parts[8];
-						companyStreetNumber = Integer.parseInt(parts[9]);
-					}
-					else if (parts[0].equals("Kind:")) {
-						kind = parts[1];
-					}
-				}
-			} catch (IOException secondException) {
-				secondException.printStackTrace();
-			}
-				
-			try{
-				bufferedReader.close();
-			} catch (IOException thirdException) {
-				thirdException.printStackTrace();
-			}
+    private BufferedReader initializeBufferedReader() {
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(inputFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bufferedReader;
+    }
 
-	}	
+	private List<String> values = new ArrayList<>();
 
-}
+	private void processReceiptLine(BufferedReader bufferedReader) {
+    	try {
+			String line = bufferedReader.readLine(); // Read the next line
+			if (line != null) {
+				String[] parts = line.split(": ");
+				String value = parts[1]; // Get the second element
+				values.add(value);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private void fromListToVariables() {
+		receiptID = Integer.parseInt(values.get(0));
+		date = values.get(1);
+		kind = values.get(2);
+		sales = Integer.parseInt(values.get(3));
+		items = Integer.parseInt(values.get(4));
+		companyName = values.get(5);
+		companyCountry = values.get(6);
+		companyCity = values.get(7);
+		companyStreet = values.get(8);
+		companyStreetNumber = Integer.parseInt(values.get(9));
+	}
+
+}	

@@ -18,7 +18,8 @@ public abstract class AbstractReceiptFileWriter {
 
 
 	//This is the template method 
-	public final void appendFile(){
+	public final void receiptTemplate(){
+		setFileToAppend(fileToWrite);
 		createFile();
 		writeFile();
 		

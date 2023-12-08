@@ -1,6 +1,8 @@
 package input;
 
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,76 +13,44 @@ import org.w3c.dom.NodeList;
 
 
 public class XMLInput extends Input {
- 
-	public XMLInput(File receiptFileXML ){
-		inputFile = receiptFileXML;
-		
-	}
+
     public void readFile() {
         try {
-        	DocumentBuilderFactory docBuilderFactory 
-			= DocumentBuilderFactory.newInstance();
-        	DocumentBuilder docBuilder
-			= docBuilderFactory.newDocumentBuilder();
-        	Document doc = docBuilder.parse(inputFile);
-        	 
-        	doc.getDocumentElement().normalize();
-            NodeList nodeLst = doc.getElementsByTagName("Agent");
-			
-        	name = ((Element) nodeLst.item(0)).getElementsByTagName("Name").
-			item(0).getChildNodes().item(0).getNodeValue().trim();
-			
-        	afm = ((Element) nodeLst.item(0)).getElementsByTagName("AFM").
-			item(0).getChildNodes().item(0).getNodeValue().trim();
-        	addAgent();
-        	NodeList receiptsNodeList = ((Element) nodeLst.
-			item(0)).getElementsByTagName("Receipt");
-			
-            int size = receiptsNodeList.getLength();
-            for(int i=0; i<size; i++){
-            	receiptID = Integer.parseInt(((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("ReceiptID").item(0).getChildNodes().item(0).getNodeValue().trim());
-            	
-            	date = ((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Date").item(0).getChildNodes().item(0).getNodeValue().trim();
-				
-            	kind = ((Element) receiptsNodeList.item(i))
-				.getElementsByTagName("Kind").item(0).getChildNodes().item(0).getNodeValue().trim();
-				
-            	sales = Double.parseDouble(((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Sales").item(0).getChildNodes().item(0).getNodeValue().trim());
-            	
-				items = Integer.parseInt(((Element) receiptsNodeList.item(i))
-				.getElementsByTagName("Items").item(0).getChildNodes().item(0).getNodeValue().trim());
-            	
-				companyName = ((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Company").item(0).getChildNodes().item(0).getNodeValue().trim();
-            	
-				companyCountry = ((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Country").item(0).getChildNodes().item(0).getNodeValue().trim();
-            	
-				companyCity = ((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("City").item(0).getChildNodes().item(0).getNodeValue().trim();
-            	
-				companyStreet = ((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Street").item(0).getChildNodes().item(0).getNodeValue().trim();
-            	
-				companyStreetNumber = Integer.parseInt(((Element) receiptsNodeList.item(i)).
-				getElementsByTagName("Number").item(0).getChildNodes().item(0).getNodeValue().trim());
-            	
-				addReceipt();
-            }
+        DocumentBuilderFactory documentBuilderFactory 
+		= DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder
+		= documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.parse(inputFile);
+        document.getDocumentElement().normalize();
 
-        	
-            
-        
+		NodeList nodeList = document.getElementsByTagName("Receipt");
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Element element = (Element) nodeList.item(i);
+				name = element.getElementsByTagName("Name").item(0).getTextContent();
+				afm = element.getElementsByTagName("Afm").item(0).getTextContent();
+				addAgent();
+				NodeList nodeList2 = element.getElementsByTagName("ReceiptID");
+				for (int j = 0; j < nodeList2.getLength(); j++) {
+					Element element2 = (Element) nodeList2.item(j);
+					receiptID = Integer.parseInt(element2.getTextContent());
+					date = element.getElementsByTagName("Date").item(j).getTextContent();
+					kind = element.getElementsByTagName("Kind").item(j).getTextContent();
+					sales = Integer.parseInt(element.getElementsByTagName("Sales").item(j).getTextContent());
+					items = Integer.parseInt(element.getElementsByTagName("Items").item(j).getTextContent());
+					companyName = element.getElementsByTagName("Company").item(j).getTextContent();
+					companyCountry = element.getElementsByTagName("Country").item(j).getTextContent();
+					companyCity = element.getElementsByTagName("City").item(j).getTextContent();
+					companyStreet = element.getElementsByTagName("Street").item(j).getTextContent();
+					companyStreetNumber = Integer.parseInt(element.getElementsByTagName("Number").item(j).getTextContent());
+					addReceipt();
+				}
+			}
             
         } catch (Exception e) {
         	JOptionPane.showMessageDialog
-			(null,"ÐñïÝêõøå êÜðïéï ðñüâëçìá êáôÜ ôï äéÜâáóìá ôïõ áñ÷åßïõ");
+			(null,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		} 
-    }
-    
+    }   
 }
 
 
