@@ -16,10 +16,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import data.ReceiptManager;
 
-public class XMLReport extends Report{
+public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsReport{
 	ReceiptManager manager;
 		
-	public XMLReport(ReceiptManager receiptManagerObj){
+	public RepresentativeStatsXMLReport(ReceiptManager receiptManagerObj){
 			manager = receiptManagerObj;
 	}	
 

@@ -9,7 +9,7 @@ import org.w3c.dom.NodeList;
 
 
 
-public class XMLInput extends Input {            
+public class XMLInput extends AbstractInput {            
 	public void readFile() {
 		Document document = initializeDocument();
 		NodeList agentNodeList = document.getElementsByTagName("Agent");

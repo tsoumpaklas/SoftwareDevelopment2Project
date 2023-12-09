@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TXTInput extends Input {
+public class TXTInput extends AbstractInput {
     // ...
 
     @Override
@@ -64,7 +64,7 @@ public class TXTInput extends Input {
 		receiptID = Integer.parseInt(values.get(0));
 		date = values.get(1);
 		kind = values.get(2);
-		sales = Integer.parseInt(values.get(3));
+		sales = Double.parseDouble(values.get(3));
 		items = Integer.parseInt(values.get(4));
 		companyName = values.get(5);
 		companyCountry = values.get(6);

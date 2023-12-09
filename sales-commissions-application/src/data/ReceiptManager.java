@@ -59,7 +59,7 @@ public class  ReceiptManager{
 		return sumItems;
 	}
 
-	public double calculateCommission(int totalSales) {
+	public double calculateCommission(double totalSales) {
 		if (totalSales > 6000 && totalSales <= 10000) {
 			return 0.1 * (totalSales - 6000);
 		}

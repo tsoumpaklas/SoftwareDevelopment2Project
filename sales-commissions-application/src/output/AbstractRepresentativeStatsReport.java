@@ -2,7 +2,7 @@ package output;
 
 import data.ReceiptManager;
 
-public abstract class Report {
+public abstract class AbstractRepresentativeStatsReport {
 
 	protected ReceiptManager receiptManager;
 	

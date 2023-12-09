@@ -7,7 +7,7 @@ import java.io.Reader;
 import data.Receipt;
 import data.ReceiptManager;
 
-public abstract class Input {
+public abstract class AbstractInput {
 	
 	protected File inputFile;
 	protected Reader inputFilePath;
@@ -29,13 +29,13 @@ public abstract class Input {
 
 	protected ReceiptManager receiptManager;
 
-	public Input() {
+	public AbstractInput() {
 		receiptManager = new ReceiptManager();
 		kind = "";
 	}
 	
 	
-	public final void inputTemplate(){
+	public final void inputTemplate(File inputFile){
 		fileInput(inputFile);
 		readFile();
 	}

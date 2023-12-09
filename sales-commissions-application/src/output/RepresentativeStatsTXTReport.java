@@ -11,10 +11,10 @@ import data.ReceiptManager;
 
 
 
-public class TXTReport extends Report{
+public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsReport{
     ReceiptManager manager = null;
 	
-	public TXTReport(ReceiptManager receiptManagerObj){
+	public RepresentativeStatsTXTReport(ReceiptManager receiptManagerObj){
         manager = receiptManagerObj;
         manager = new ReceiptManager();
 	}
