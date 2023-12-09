@@ -21,12 +21,12 @@ public abstract class AbstractReceiptFileWriter {
 	public final void receiptTemplate(){
 		setFileToAppend(fileToWrite);
 		createFile();
-		writeFile();
+		writeToFile();
 		
 	}
 
 	protected abstract void createFile();
-	protected abstract void writeFile();
+	protected abstract void writeToFile();
 	
 }
 

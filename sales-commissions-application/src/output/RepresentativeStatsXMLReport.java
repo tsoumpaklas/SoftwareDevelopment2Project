@@ -14,74 +14,55 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import data.ReceiptManager;
 
 public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsReport{
-	ReceiptManager manager;
-		
-	public RepresentativeStatsXMLReport(ReceiptManager receiptManagerObj){
-			manager = receiptManagerObj;
-	}	
-
-		
+	
 	public void saveFile() {
-		String fullPathName =  "/users/Nick/Desktop/Reports/" + manager.getAfm() + "_SALES.xml";
+		String fullPathName =  "/users/Nick/Desktop/Reports/" + receiptManager.getAfm() + "_SALES.xml";
         try {
         	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         	 DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
         	 Document document = documentBuilder.newDocument();
-        	 // root element
-        	 Element agentElem = document.createElement("Agent");
-        	 document.appendChild(agentElem);
-        	 
-        	
-        	 
-        	 Element name = document.createElement("Name");
-        	 name.appendChild(document.createTextNode(manager.getName()));
-        	 agentElem.appendChild(name);
-        	 
-        	 Element afm = document.createElement("AFM");
-        	 afm.appendChild(document.createTextNode(manager.getAfm()));	
-        	 agentElem.appendChild(afm);
-        	 
-        	 Element totalSales = document.createElement("TotalSales");
-        	 totalSales.appendChild(document.createTextNode(Double.toString(manager.calculateTotalSales())));
-        	 agentElem.appendChild(totalSales);
-        	 
-        	 Element trouserSales = document.createElement("TrouserSales");
-        	 trouserSales.appendChild(document.createTextNode(Float.toString(manager.calculateTrouserSales())));
-        	 agentElem.appendChild(trouserSales);
-        	 
-        	 Element skirtsSales = document.createElement("SkirtsSales");
-        	 skirtsSales.appendChild(document.createTextNode(Float.toString(manager.calculateSkirtsSales())));
-        	 agentElem.appendChild(skirtsSales);
-        	 
-        	 Element shirtsSales = document.createElement("ShirtsSales");
-        	 shirtsSales.appendChild(document.createTextNode(Float.toString(manager.calculateShirtsSales())));
-        	 agentElem.appendChild(shirtsSales);
-        	 
-        	 Element coatsSales = document.createElement("CoatsSales");
-        	 coatsSales.appendChild(document.createTextNode(Float.toString(manager.calculateCoatsSales())));
-        	 agentElem.appendChild(coatsSales);
-        	 
-        	 Element commission = document.createElement("Commission");
-        	 commission.appendChild(document.createTextNode(Double.toString(manager.calculateCommission())));
-        	 agentElem.appendChild(commission);
-        
-        	 
-        	 
-        	 TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        	 Transformer transformer = transformerFactory.newTransformer();
-        	 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        	 transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        	 DOMSource domSource = new DOMSource(document);
-        	 StreamResult streamResult = new StreamResult(new File(fullPathName));
-        	 transformer.transform(domSource, streamResult);
-      
-    		
+
+        	 Element agentElement = document.createElement("Agent");
+        	 document.appendChild(agentElement);
+
+			 addContent(document);
+			 writeToFile(document, fullPathName);
+
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+       		 }
+	}	
+		public void createElements(Document document, Element parent, String name, String content) {
+			Element element = document.createElement(name);
+			element.appendChild(document.createTextNode(content));
+			parent.appendChild(element);
+		}
+		public void addContent(Document document)  {
+			Element root = (Element) document.getFirstChild();
+			createElements(document, root, "Name", String.valueOf(receiptManager.getName()));
+			createElements(document, root, "AFM", String.valueOf(receiptManager.getAfm()));
+			createElements(document, root, "TotalSales", String.valueOf(receiptManager.calculateTotalSales()));
+			createElements(document, root, "TrouserSales", String.valueOf(receiptManager.calculateSalesForEachItem("Trouser")));
+			createElements(document, root, "ShirtSales", String.valueOf(receiptManager.calculateSalesForEachItem("Shirt")));
+			createElements(document, root, "CoatsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Coat")));
+			createElements(document, root, "Commision", String.valueOf(receiptManager.calculateCommission(receiptManager.calculateTotalSales())));
+
+		}
+		public void writeToFile(Document document, String fullPathName)	{
+			try{
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+				DOMSource domSource = new DOMSource(document);
+				StreamResult streamResult = new StreamResult(new File(fullPathName));
+				transformer.transform(domSource, streamResult);
+			}catch(Exception e)	{
+				e.printStackTrace();
+				}
+		
     		
 	}
 

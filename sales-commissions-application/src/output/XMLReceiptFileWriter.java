@@ -59,7 +59,7 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 }
 
 	@Override
-	protected void writeFile() {
+	protected void writeToFile() {
 		try{
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
