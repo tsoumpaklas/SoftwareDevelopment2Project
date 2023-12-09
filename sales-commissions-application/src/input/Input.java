@@ -22,9 +22,10 @@ public abstract class Input {
 	protected String companyStreet;	
 
 	protected Integer receiptID;
-    protected Integer sales;
     protected Integer items;
 	protected Integer companyStreetNumber;
+
+	protected Double sales;
 
 	protected ReceiptManager receiptManager;
 

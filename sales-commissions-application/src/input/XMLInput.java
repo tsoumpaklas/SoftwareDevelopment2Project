@@ -1,8 +1,5 @@
 package input;
 
-import java.io.File;
-import java.io.IOException;
-
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,17 +12,16 @@ import org.w3c.dom.NodeList;
 public class XMLInput extends Input {            
 	public void readFile() {
 		Document document = initializeDocument();
-		NodeList nodeList = document.getElementsByTagName("Receipt");
+		NodeList agentNodeList = document.getElementsByTagName("Agent");
+	
+		processAgent(agentNodeList);
 
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Element element = (Element) nodeList.item(i);
-			processAgent(element);
-			NodeList nodeList2 = element.getElementsByTagName("ReceiptID");
-			for (int j = 0; j < nodeList2.getLength(); j++) {
-				Element element2 = (Element) nodeList2.item(j);
-				processReceipt(element2, element, j);
-			}
+		NodeList receiptsNodeList = ((Element) agentNodeList.item(0)).getElementsByTagName("Receipt");
+		int size = receiptsNodeList.getLength();
+		for (int i = 0; i < size; i++) {
+			processReceipt(receiptsNodeList, i);
 		}
+		
 	}
 
 	private Document initializeDocument() {
@@ -36,29 +32,40 @@ public class XMLInput extends Input {
 			document = documentBuilder.parse(inputFile);
 			document.getDocumentElement().normalize();
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error while reading XML file", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return document;
 	}
 
-	private void processAgent(Element element) {
-		name = element.getElementsByTagName("Name").item(0).getTextContent();
-		afm = element.getElementsByTagName("Afm").item(0).getTextContent();
+	private void processAgent(NodeList agentNodeList) {
+		name = ((Element) agentNodeList.item(0)).getElementsByTagName("Name").
+		item(0).getChildNodes().item(0).getNodeValue().trim();
+
+		afm = ((Element) agentNodeList.item(0)).getElementsByTagName("AFM").
+		item(0).getChildNodes().item(0).getNodeValue().trim();
+
 		addAgent();
 	}
-
-	private void processReceipt(Element element2, Element element, int j) {
-		receiptID = Integer.parseInt(element2.getTextContent());
-		date = element.getElementsByTagName("Date").item(j).getTextContent();
-		kind = element.getElementsByTagName("Kind").item(j).getTextContent();
-		sales = Integer.parseInt(element.getElementsByTagName("Sales").item(j).getTextContent());
-		items = Integer.parseInt(element.getElementsByTagName("Items").item(j).getTextContent());
-		companyName = element.getElementsByTagName("Company").item(j).getTextContent();
-		companyCountry = element.getElementsByTagName("Country").item(j).getTextContent();
-		companyCity = element.getElementsByTagName("City").item(j).getTextContent();
-		companyStreet = element.getElementsByTagName("Street").item(j).getTextContent();
-		companyStreetNumber = Integer.parseInt(element.getElementsByTagName("Number").item(j).getTextContent());
-		
+	private void processReceipt(NodeList receiptsNodeList, int i) {
+		receiptID = Integer.parseInt(getElementText(receiptsNodeList, i, "ReceiptID"));
+		date = getElementText(receiptsNodeList, i, "Date");
+		kind = getElementText(receiptsNodeList, i, "Kind");
+		sales = Double.parseDouble(getElementText(receiptsNodeList, i, "Sales"));
+		items = Integer.parseInt(getElementText(receiptsNodeList, i, "Items"));
+		companyName = getElementText(receiptsNodeList, i, "Company");
+		companyCountry = getElementText(receiptsNodeList, i, "Country");
+		companyCity = getElementText(receiptsNodeList, i, "City");
+		companyStreet = getElementText(receiptsNodeList, i, "Street");
+		addReceipt();
+	}
+	private String getElementText(NodeList nodeList, int index, String tagName) {
+		return ((Element) nodeList.item(index))
+			.getElementsByTagName(tagName)
+			.item(0)
+			.getChildNodes()
+			.item(0)
+			.getNodeValue()
+			.trim();
 	}
 }
 
