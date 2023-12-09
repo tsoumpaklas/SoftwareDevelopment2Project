@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public class TXTInput extends AbstractInput {
-    // ...
 
     @Override
     public void readFile() {

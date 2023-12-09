@@ -7,59 +7,48 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import data.ReceiptManager;
 
 
 
 public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsReport{
-    ReceiptManager manager = null;
-	
-	public RepresentativeStatsTXTReport(ReceiptManager receiptManagerObj){
-        manager = receiptManagerObj;
-        manager = new ReceiptManager();
-	}
-	
 	
 	public void saveFile() {
-        BufferedWriter bufferedWriter = null;
         try{
-        	String fullPathName =  "/users/Nick/Desktop/Reports/" + manager.getAfm() + "_SALES.txt";
-        	bufferedWriter = new BufferedWriter(new FileWriter(new File(fullPathName)));
-            
-        	bufferedWriter.write("Name: " + manager.getName()); 
-            bufferedWriter.newLine();
+        String fullPathName =  "/users/Nick/Desktop/Reports/" + receiptManager.getAfm() + "_SALES.txt";
+        BufferedWriter bufferedWriter  = new BufferedWriter(new FileWriter(new File(fullPathName)));
 
-            bufferedWriter.write("AFM: " + manager.getAfm());
-            bufferedWriter.newLine();
-            bufferedWriter.newLine();
-            bufferedWriter.newLine();
+        bufferedWriter.write("Name:" + receiptManager.getName());
+        writeEmptyLines(bufferedWriter, 1);
 
-            
-            bufferedWriter.write("Total Sales: " + manager.calculateTotalSales());
-            bufferedWriter.newLine();
- 
-            bufferedWriter.write("Trousers Sales: " + manager.calculateSalesForEachItem("Trousers"));
-            bufferedWriter.newLine();
+        bufferedWriter.write("AFM:" + receiptManager.getAfm());
+        writeEmptyLines(bufferedWriter, 3);
 
-            bufferedWriter.write("Skirts Sales: " + manager.calculateSalesForEachItem("Skirts"));
-            bufferedWriter.newLine();
+        bufferedWriter.write("Total Sales:" + receiptManager.calculateTotalSales());
+        writeEmptyLines(bufferedWriter, 1);
 
-            bufferedWriter.write("Shirts Sales: " + manager.calculateSalesForEachItem("Shirts"));
-            bufferedWriter.newLine();
-            
-            bufferedWriter.write("Coats Sales: " + manager.calculateSalesForEachItem("Coats"));
-            bufferedWriter.newLine();
-
-            bufferedWriter.write("Commission: " + manager.calculateCommission(manager.calculateTotalSales()));
-            
-        	bufferedWriter.close();
-
-
-        }catch (IOException ex){
-			JOptionPane.showMessageDialog(null,"������ ������ �������� ���� ��� ���������� ��� �������");
-
+        String[] items = {"Trousers ", "Skirts ", "Shirts ", " Coats"};
+        for(String item: items){
+            writeLine(bufferedWriter, items + "Sales: ", receiptManager.calculateSalesForEachItem(item));
         }
-		
-	}
 
-}
+        bufferedWriter.write("Commision " +receiptManager.calculateCommission(receiptManager.calculateTotalSales()));
+
+        bufferedWriter.close();
+
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Error writing file", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+	}
+    public void writeEmptyLines(BufferedWriter bufferedWriter, int lines) throws IOException {
+        for (int i = 0; i < lines; i++) {
+            bufferedWriter.newLine();
+        }
+    }
+    private void writeLine(BufferedWriter writer, String label, Object value) throws IOException {
+        writer.write(label + value);
+        writer.newLine();
+    }
+
+ }
+
+
