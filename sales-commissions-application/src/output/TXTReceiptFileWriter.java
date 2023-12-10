@@ -7,18 +7,12 @@ public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
 
 	private FileWriter fileWriter;
 	
-	@Override
-	protected void createFile() {
-		try {
-			fileWriter = new FileWriter(fileToWrite);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	@Override
-	protected void writeFile() {
+	protected void writeToFile() {
 		try {
+			fileWriter = new FileWriter(fileToWrite);
 			fileWriter.write("\n" + "Receipt ID: " + receipt.getReceiptID() + "\n");
 			fileWriter.write("Date: " + receipt.getDate() + "\n");
 			fileWriter.write("Kind: " + receipt.getKind() + "\n");

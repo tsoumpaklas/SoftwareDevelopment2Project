@@ -233,15 +233,15 @@ public class ResultWindow extends JDialog {
 				
 	}
 	private void outputTXTButtonPressed(ActionEvent evt) {
-		RepresentativeStatsTXTReport makeTXTFile = new RepresentativeStatsTXTReport(selectedManager);
-		makeTXTFile.saveFile();
+		RepresentativeStatsTXTReport makeTXTFile = new RepresentativeStatsTXTReport();
+		makeTXTFile.RepresentativeTemplateMethod();
 		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");
 
 		
 	}
 	private void outputXMLButtonPressed(ActionEvent evt) {
-		RepresentativeStatsXMLReport makeXMLFile = new RepresentativeStatsXMLReport(selectedManager);
-		makeXMLFile.saveFile();
+		RepresentativeStatsXMLReport makeXMLFile = new RepresentativeStatsXMLReport();
+		makeXMLFile.RepresentativeTemplateMethod();
 		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");		
 	}
 	private void okButtonPressed(ActionEvent evt) {

@@ -16,10 +16,14 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Color;
 
+import data.Receipt;
 import data.ReceiptManager;
 
 
@@ -61,6 +65,8 @@ public class SelectionWindow extends JDialog {
 	private ReceiptManager selectedManager;
 	@SuppressWarnings("unused")
 	private String fileType;
+
+	private List<>
 	
 	public SelectionWindow(InputWindow dialog, ReceiptManager selectedManager, String fileTypeFlag) {
 		inputDialog = dialog;
@@ -435,28 +441,19 @@ public class SelectionWindow extends JDialog {
 	
 	
 	private void addReceiptButtonPressed(ActionEvent evt) {
-		if(receiptIDTextField.getText().isEmpty() && dateTextField.getText().isEmpty() 
-				&& kindTextField.getText().isEmpty() && salesTextField.getText().isEmpty()
-				&& itemsTextField.getText().isEmpty() && companyTextField.getText().isEmpty()
-				&& countryTextField.getText().isEmpty() && cityTextField.getText().isEmpty()
-				&& streetTextField.getText().isEmpty() && numberTextField.getText().isEmpty()){
-			JOptionPane.showMessageDialog(null,"������ �� ������������ ��� �� �����");
-			
-		}
-		/*else if(kindTextField.toString().equalsIgnoreCase("Coats") == false && 
-				kindTextField.toString().equalsIgnoreCase("Shirts") == false &&
-				kindTextField.toString().equalsIgnoreCase("Skirts") == false &&
-				kindTextField.toString().equalsIgnoreCase("Trousers") == false){
-			JOptionPane.showMessageDialog(null,"To ����� ��� �������������� ��� ����� ������. �����������"
-					+ " ���� �������������� �� ����� kind Coats � Shirts � Skirts � Trousers");
 
-		}*/
-			
+		List<String> textFields = new ArrayList<>();
+		textFields.addAll(Arrays.asList(
+				receiptIDTextField.getText(),dateTextField.getText(),kindTextField.getText()
+				,salesTextField.getText(),itemsTextField.getText(),companyTextField.getText(),
+				countryTextField.getText(),cityTextField.getText(),streetTextField.getText(),numberTextField.getText()));
+
+		if(textFields.isEmpty()){
+			JOptionPane.showMessageDialog(null,"�������� �������� ��������, ����������� ����");
+		}
 		else{
-			
 			addReceipt();
 			appendFile();
-			
 		}
 		receiptIDTextField.setText("");	
 		dateTextField.setText("");			
@@ -467,10 +464,10 @@ public class SelectionWindow extends JDialog {
 		countryTextField.setText("");	
 		cityTextField.setText("");	
 		streetTextField.setText("");	
-		numberTextField.setText("");	
-
+		numberTextField.setText("");
+		
 	}
-
+	
 	private void appendFile(){
 		selectedAgent.getFileAppender().setReceiptID(receiptIDTextField.getText());
 		selectedAgent.getFileAppender().setDate(dateTextField.getText());

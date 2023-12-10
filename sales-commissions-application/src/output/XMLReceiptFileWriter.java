@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 	private Document document;
 	 
-	protected void createFile() {
+	protected void createDocument() {
         try {
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
      		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();

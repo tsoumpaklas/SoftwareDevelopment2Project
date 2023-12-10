@@ -2,6 +2,7 @@ package output;
 
 import java.io.File;
 import data.Receipt;
+import data.ReceiptManager;
 
 
 public abstract class AbstractReceiptFileWriter {
@@ -11,21 +12,21 @@ public abstract class AbstractReceiptFileWriter {
 	/*Receipt contains: receiptID, date, sales,
 	  items, company, kind */
 	protected Receipt receipt;
+	protected ReceiptManager receiptManager;
 
-	protected void setFileToAppend(File fileToAppend) {
+	protected void setFileToAppend(File fileToAppend, ReceiptManager receiptManager) {
 		this.fileToWrite = fileToAppend;
-}
-
+		this.receiptManager = receiptManager;
+		this.receipt = receiptManager.getReceipts().get(receiptManager.getReceipts().size() -1);
+	}
 
 	//This is the template method 
-	public final void receiptTemplate(){
-		setFileToAppend(fileToWrite);
-		createFile();
+	public final void receiptTemplate(File fileToWrite){
+		setFileToAppend(fileToWrite, receiptManager);
 		writeToFile();
 		
 	}
 
-	protected abstract void createFile();
 	protected abstract void writeToFile();
 	
 }

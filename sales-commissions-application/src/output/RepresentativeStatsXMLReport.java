@@ -18,7 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsReport{
 	
 	public void saveFile() {
-		String fullPathName =  "/users/Nick/Desktop/Reports/" + receiptManager.getAfm() + "_SALES.xml";
+		String fullPathName =  "C:\\Users\\User\\Documents\\Reports" + receiptManager.getAfm() + "_SALES.xml";
         try {
         	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         	 DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();

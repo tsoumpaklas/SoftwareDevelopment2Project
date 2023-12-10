@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.awt.Color;
 
 import javax.swing.GroupLayout;
@@ -204,6 +203,7 @@ public class InputWindow extends JDialog {
 			File recieptFileTXT = TXTFileChooser.getSelectedFile();
 			TXTInput inputFileTXT = new TXTInput();
 			inputFileTXT.inputTemplate(recieptFileTXT);
+			receiptManager.getFileAppender().receiptTemplate(recieptFileTXT);
 
 			for(int i = 0; i< listModel.getSize(); i++){
 				if(receiptManager.getName().equals(listModel.getElementAt(i))){
@@ -241,6 +241,7 @@ public class InputWindow extends JDialog {
 			File recieptFileXML = XMLFileChooser.getSelectedFile();
 			XMLInput inputFileXML = new XMLInput();	
 			inputFileXML.inputTemplate(recieptFileXML);
+			receiptManager.getFileAppender().receiptTemplate(recieptFileXML);
 
 			for(int i = 0; i< listModel.getSize(); i++){
 				if(receiptManager.getName().equals(listModel.getElementAt(i))){

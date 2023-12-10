@@ -68,3 +68,14 @@ Country: Greece
 City: Ioannina
 Street: Kaloudi 
 Number: 10
+
+Receipt ID: 12
+Date: 12/02/1200
+Kind: Shirt
+Sales: 200
+Items: Clothes
+Company: aslsla
+Country: Gr
+City: Xanthi
+Street: ANDRE
+Number: 10
