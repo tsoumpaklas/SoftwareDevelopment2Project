@@ -68,9 +68,7 @@ public abstract class AbstractInput {
 
 	public abstract void readFile();
 
-	public ReceiptManager getReceiptManager() {
-		return receiptManager;
-	}
+	
 
 	
 }
