@@ -12,16 +12,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import data.Receipt;
 
 
-public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
+
+public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
 	private Document document;
 	 
 	protected void createDocument() {
         try {
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
      		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-    	    document = documentBuilder.parse(fileToWrite);
+    	    document = documentBuilder.parse(fileToAppend);
 
 			addContent();
 
@@ -59,7 +61,7 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 }
 
 	@Override
-	protected void writeToFile() {
+	protected void appendToFile() {
 		try{
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
@@ -67,11 +69,12 @@ public class XMLReceiptFileWriter  extends AbstractReceiptFileWriter{
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			DOMSource source = new DOMSource(document);
 			
-			StreamResult result = new StreamResult(fileToWrite);
+			StreamResult result = new StreamResult(fileToAppend);
 			transformer.transform(source, result);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 	}
+
 }

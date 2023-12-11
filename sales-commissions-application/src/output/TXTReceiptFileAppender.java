@@ -3,16 +3,14 @@ package output;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
+public class TXTReceiptFileAppender extends AbstractReceiptFileAppender{
 
 	private FileWriter fileWriter;
 	
-
-
 	@Override
-	protected void writeToFile() {
+	protected void appendToFile() {
 		try {
-			fileWriter = new FileWriter(fileToWrite);
+			fileWriter = new FileWriter(fileToAppend);
 			fileWriter.write("\n" + "Receipt ID: " + receipt.getReceiptID() + "\n");
 			fileWriter.write("Date: " + receipt.getDate() + "\n");
 			fileWriter.write("Kind: " + receipt.getKind() + "\n");
@@ -30,8 +28,6 @@ public class TXTReceiptFileWriter extends AbstractReceiptFileWriter{
 		}
 
 	}
-
-	
 
 
 }

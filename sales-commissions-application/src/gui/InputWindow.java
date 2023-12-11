@@ -46,7 +46,7 @@ public class InputWindow extends JDialog {
 	private  ReceiptManager receiptManager = new ReceiptManager();
 	private ReceiptManager selectedManager = null;
 	static InputWindow dialog = new InputWindow();
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unused") 
 	private File inputFile;
 	private String fileTypeFlag;
 	/**
@@ -203,7 +203,6 @@ public class InputWindow extends JDialog {
 			File recieptFileTXT = TXTFileChooser.getSelectedFile();
 			TXTInput inputFileTXT = new TXTInput();
 			inputFileTXT.inputTemplate(recieptFileTXT);
-			receiptManager.getFileAppender().receiptTemplate(recieptFileTXT);
 
 			for(int i = 0; i< listModel.getSize(); i++){
 				if(receiptManager.getName().equals(listModel.getElementAt(i))){
@@ -241,7 +240,6 @@ public class InputWindow extends JDialog {
 			File recieptFileXML = XMLFileChooser.getSelectedFile();
 			XMLInput inputFileXML = new XMLInput();	
 			inputFileXML.inputTemplate(recieptFileXML);
-			receiptManager.getFileAppender().receiptTemplate(recieptFileXML);
 
 			for(int i = 0; i< listModel.getSize(); i++){
 				if(receiptManager.getName().equals(listModel.getElementAt(i))){
@@ -296,6 +294,10 @@ public class InputWindow extends JDialog {
 			this.setVisible(false);
 			sw.setVisible(true);
 		}	
-	}	
+	}
+	
+	public File getInputFile(){
+		return inputFile;
+	}
 
 }

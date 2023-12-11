@@ -55,6 +55,9 @@ public class TXTInput extends AbstractInput {
 				String value = parts[1]; // Get the second element
 				values.add(value);
 			}
+			else{
+				System.err.println("Invalid line: " + line);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

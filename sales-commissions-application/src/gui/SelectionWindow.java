@@ -65,8 +65,6 @@ public class SelectionWindow extends JDialog {
 	private ReceiptManager selectedManager;
 	@SuppressWarnings("unused")
 	private String fileType;
-
-	private List<>
 	
 	public SelectionWindow(InputWindow dialog, ReceiptManager selectedManager, String fileTypeFlag) {
 		inputDialog = dialog;
@@ -398,48 +396,53 @@ public class SelectionWindow extends JDialog {
 	
 	
 	protected void okButtonPressed(ActionEvent evt) {
-		if(totalSalesCheckBox.isSelected())
-			 totalSales = selectedManager.calculateTotalSales();
-		else
-			totalSales = -1;
-		
-		if(totalItemsCheckBox.isSelected())
-			totalItems = selectedManager.calculateTotalItems();
-		else
-			totalItems = -1;
-		
-		if(shirtRadio.isSelected())
-			shirtSales = selectedManager.calculateSalesForEachItem("Shirt");
-		else
-			shirtSales = -1;
-		
-		if(skirtRadio.isSelected()  )
-			skirtSales = selectedManager.calculateSalesForEachItem("Skirt");
-		else 
-			skirtSales = -1;
-		
-		if(coatRadio.isSelected())
-			coatsSales = selectedManager.calculateSalesForEachItem("Coat");
-		else 
-			coatsSales = -1;
-		
-		if(trousersRadio.isSelected())
-			trousersSales = selectedManager.calculateSalesForEachItem("Trouser");
-		else 
-			trousersSales = -1;
+
+		totalSales = calculateTotalSales(totalSalesCheckBox);
+		totalItems = (int) calculateTotalItems(totalItemsCheckBox);
+
+		shirtSales = (int)calculateSalesForEachItem(shirtRadio, "Shirt");
+		skirtSales = (int)calculateSalesForEachItem(skirtRadio, "Skirt");
+		coatsSales = (int)calculateSalesForEachItem(coatRadio, "Coat");
+		trousersSales = (int)calculateSalesForEachItem(trousersRadio, "Trouser");
 		
 		if(commissionCheckBox.isSelected()){
 			totalSales = selectedManager.calculateTotalSales();
 			commission = selectedManager.calculateCommission(totalSales);
-		}
-		else
+		} else {
 			commission = -1;
-		ResultWindow rs = new ResultWindow(selectedManager, totalSales, totalItems, shirtSales, skirtSales, trousersSales, coatsSales, commission);
+		}
+
+		ResultWindow rs = new ResultWindow(this, selectedManager, totalSales, totalItems, shirtSales, skirtSales, trousersSales, coatsSales, commission);
 		rs.setVisible(true);
 		this.setVisible(false);		
 	}
+
+	private double calculateTotalSales(JCheckBox checkBox) {
+		if (checkBox.isSelected()) {
+			return selectedManager.calculateTotalSales();
+		} else {
+			return -1;
+		}
+	}
 	
+	private double calculateTotalItems(JCheckBox checkBox) {
+		if (checkBox.isSelected()) {
+			return selectedManager.calculateTotalItems();
+		} else {
+			return -1;
+		}
+	}
 	
+	private double calculateSalesForEachItem(JRadioButton radioButton, String itemName) {
+		if (radioButton.isSelected()) {
+			return selectedManager.calculateSalesForEachItem(itemName);
+		} else {
+			return -1;
+		}
+	}
+
+	
+
 	private void addReceiptButtonPressed(ActionEvent evt) {
 
 		List<String> textFields = new ArrayList<>();
@@ -455,56 +458,34 @@ public class SelectionWindow extends JDialog {
 			addReceipt();
 			appendFile();
 		}
+	
+		setReceiptFieldsEmpty();
+		setCompanyFieldsEmpty();
+	}
+	public void setReceiptFieldsEmpty(){
 		receiptIDTextField.setText("");	
 		dateTextField.setText("");			
 		kindTextField.setText("");	
 		salesTextField.setText("");
-		itemsTextField.setText("");	
+		itemsTextField.setText("");
+	}
+	public void setCompanyFieldsEmpty(){
 		companyTextField.setText("");	
 		countryTextField.setText("");	
 		cityTextField.setText("");	
 		streetTextField.setText("");	
 		numberTextField.setText("");
-		
 	}
-	
-	private void appendFile(){
-		selectedAgent.getFileAppender().setReceiptID(receiptIDTextField.getText());
-		selectedAgent.getFileAppender().setDate(dateTextField.getText());
-		selectedAgent.getFileAppender().setKind(kindTextField.getText());
-		selectedAgent.getFileAppender().setSales(salesTextField.getText());
-		selectedAgent.getFileAppender().setItems(itemsTextField.getText());
-		selectedAgent.getFileAppender().setCompany(companyTextField.getText());
-		selectedAgent.getFileAppender().setCountry(countryTextField.getText());
-		selectedAgent.getFileAppender().setCity(cityTextField.getText());
-		selectedAgent.getFileAppender().setStreet(streetTextField.getText());
-		selectedAgent.getFileAppender().setNumber(numberTextField.getText());
-		selectedAgent.getFileAppender().appendFile();
-	}
-	
+
+
+
+
 	private void addReceipt(){
-		Receipt receipt = new Receipt();
-		
-		
-		if(kindTextField.equals("Shirts"))		
-			receipt= new Shirt();
-		else if (kindTextField.equals("Skirts"))
-			receipt = new Skirt();
-		else if (kindTextField.equals("Trousers"))
-			receipt = new Trouser();
-		else if(kindTextField.equals("Coats"))				
-			receipt = new Coat();
+		Receipt receipt = new Receipt(kindTextField.getText());
 		try{
-			receipt.setReceiptID(Integer.parseInt(receiptIDTextField.getText()));			
-			receipt.setDate(dateTextField.getText());
-			receipt.setSales(Double.parseDouble(salesTextField.getText()));
-			receipt.setItems(Integer.parseInt(itemsTextField.getText()));
-			receipt.getCompany().setName(companyTextField.getText());
-			receipt.getCompany().getCompanyAddress().setCountry(countryTextField.getText());
-			receipt.getCompany().getCompanyAddress().setCity(cityTextField.getText());
-			receipt.getCompany().getCompanyAddress().setStreet(streetTextField.getText());
-			receipt.getCompany().getCompanyAddress().setStreetNumber(Integer.parseInt(numberTextField.getText()));
-			selectedAgent.getReceipts().add(receipt);
+			setReceiptDetails(receipt);
+			setCompanyDetails(receipt);
+			selectedManager.getReceipts().add(receipt);
 			numOfReceipts++;
 			numOfReceiptsTextField.setText(Integer.toString(numOfReceipts));
 			JOptionPane.showMessageDialog(null,"� �������� ���������� ��������");
@@ -514,6 +495,30 @@ public class SelectionWindow extends JDialog {
 
 		}
 	}
+
+	private void setReceiptDetails(Receipt receipt){
+		receipt.setReceiptID(Integer.parseInt(receiptIDTextField.getText()));			
+		receipt.setDate(dateTextField.getText());
+		receipt.setSales(Double.parseDouble(salesTextField.getText()));
+		receipt.setItems(Integer.parseInt(itemsTextField.getText()));
+
+	}
+	private void setCompanyDetails(Receipt receipt){
+		receipt.getCompany().setName(companyTextField.getText());
+		receipt.getCompany().getCompanyAddress().setCountry(countryTextField.getText());
+		receipt.getCompany().getCompanyAddress().setCity(cityTextField.getText());
+		receipt.getCompany().getCompanyAddress().setStreet(streetTextField.getText());
+		receipt.getCompany().getCompanyAddress().setStreetNumber(Integer.parseInt(numberTextField.getText()));
+	}
+
+
+
+
+	//NEED IMPROVEMENT
+	private void appendFile(){
+		selectedManager.getReceiptFileAppender().receiptTemplate(inputDialog.getInputFile(), selectedManager);
+	}
+	
 	
 	private void cancelButtonPressed(ActionEvent evt) {		
 		dispose();

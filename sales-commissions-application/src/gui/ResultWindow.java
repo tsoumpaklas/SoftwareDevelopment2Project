@@ -48,7 +48,7 @@ public class ResultWindow extends JDialog {
 	public ResultWindow(final SelectionWindow sw, ReceiptManager receiptManager,double tSales,int tItems,
 			float shirtS,float skirtS,float trousersS,float coatsS,double com) {
 		selectionWindow = sw;
-		this.selectedManager = receiptManager;
+		selectedManager = receiptManager;
 		totalSales = tSales;
 		totalItems = tItems;
 		shirtSales = shirtS;

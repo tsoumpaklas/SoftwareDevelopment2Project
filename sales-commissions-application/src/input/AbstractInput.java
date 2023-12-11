@@ -29,9 +29,9 @@ public abstract class AbstractInput {
 
 	protected ReceiptManager receiptManager;
 
-	public AbstractInput() {
+	protected AbstractInput() {
 		receiptManager = new ReceiptManager();
-		kind = "";
+		kind = new String("");
 	}
 	
 	
@@ -40,26 +40,30 @@ public abstract class AbstractInput {
 		readFile();
 	}
 
-	public void fileInput(File inputFile) {
+	protected void fileInput(File inputFile) {
 		this.inputFile = inputFile;
 		inputFile = inputFile.getAbsoluteFile();
 	}
-	public void addAgent() {
+	protected void addAgent() {
 		receiptManager.setName(name);
 		receiptManager.setAfm(afm);
 	}
 	
-	public void addReceipt( ){
+	protected void addReceipt() {
 		Receipt receipt = new Receipt(kind);
+
 		receipt.setReceiptID(receiptID);
 		receipt.setDate(date);
 		receipt.setSales(sales);
 		receipt.setItems(items);
+
 		receipt.getCompany().setName(companyName);
 		receipt.getCompany().getAddress().setCountry(companyCountry);
 		receipt.getCompany().getAddress().setCity(companyCity);
 		receipt.getCompany().getAddress().setStreet(companyStreet);
 		receipt.getCompany().getAddress().setStreetNumber(companyStreetNumber);
+
+		receiptManager.getReceipts().add(receipt);
 	}
 
 	public abstract void readFile();
