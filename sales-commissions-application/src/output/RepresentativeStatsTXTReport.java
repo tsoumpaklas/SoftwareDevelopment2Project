@@ -14,7 +14,7 @@ public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsRep
 	
 	public void saveFile() {
         try{
-        String fullPathName =  "/users/Nick/Desktop/Reports/" + receiptManager.getAfm() + "_SALES.txt";
+        String fullPathName =  "C:\\Users\\User\\Desktop\\" + receiptManager.getAfm() + "_SALES.txt";
         BufferedWriter bufferedWriter  = new BufferedWriter(new FileWriter(new File(fullPathName)));
 
         bufferedWriter.write("Name:" + receiptManager.getName());
@@ -26,9 +26,9 @@ public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsRep
         bufferedWriter.write("Total Sales:" + receiptManager.calculateTotalSales());
         writeEmptyLines(bufferedWriter, 1);
 
-        String[] items = {"Trousers ", "Skirts ", "Shirts ", " Coats"};
+        String[] items = {"Trousers", "Skirts", "Shirts", "Coats"};
         for(String item: items){
-            writeLine(bufferedWriter, items + "Sales: ", receiptManager.calculateSalesForEachItem(item));
+            writeLine(bufferedWriter, item + "Sales: ", receiptManager.calculateSalesForEachItem(item));
         }
 
         bufferedWriter.write("Commision " +receiptManager.calculateCommission(receiptManager.calculateTotalSales()));

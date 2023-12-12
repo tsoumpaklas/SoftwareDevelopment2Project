@@ -18,13 +18,21 @@ public class TXTInput extends AbstractInput {
     public void readFile() {
         BufferedReader bufferedReader = initializeBufferedReader();
         readAgentDetails(bufferedReader);
+		//int n = 0;
 		while(true) {
+			//n++;
 			processReceiptLine(bufferedReader);
+			//System.out.println("WTF S GOING  " +n );
+			System.out.println(values.toString());
 			if (values.isEmpty()) {
+				//System.out.println("I went there "+n);
 				break;
     		}
+			//System.out.println("WTF S GOING  " +n );
 			fromListToVariables();
+			//System.out.println("WTF S GOING  " +n );
 			addReceipt();
+			
 			values.clear();
 		}
 	}
@@ -32,9 +40,12 @@ public class TXTInput extends AbstractInput {
     private void readAgentDetails(BufferedReader bufferedReader) {
 		
 		try {
-			name = bufferedReader.readLine();
-			afm = bufferedReader.readLine();
-			System.out.println("Name: " + name + " AFM: " + afm + "\n");
+			String n[] = bufferedReader.readLine().trim().split(":");
+			name = n[1];
+			String a[] = bufferedReader.readLine().trim().split(":");
+			afm = a[1];
+			//System.out.println("Name: " + name + " AFM: " + afm + "\n");
+			addAgent();
 		} catch (IOException e) {
 		JOptionPane.showMessageDialog(null, "Error in readAgentDetails", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -55,17 +66,23 @@ public class TXTInput extends AbstractInput {
 	private void processReceiptLine(BufferedReader bufferedReader) {
     	try {
 			String line = bufferedReader.readLine(); // Read the next line
-			while (line != null) {
+			while(line != null) {
+				//System.out.println(line);
+				line = line.trim();
 				// Skip empty lines or lines without ":"
-				if (line.trim().isEmpty() || !line.contains(":")) {
+				if (!line.contains(":")) {
 					line = bufferedReader.readLine();
 					continue;
 				}
-				String[] parts = line.split(": ");
+				String[] parts = line.split(":");
 				if (parts.length > 1) {
-					String value = parts[1]; // Get the second element
+					String value = parts[1].trim(); // Get the second element
 					values.add(value);
 				}
+				//System.out.println("THIS IS PARTS[0]: " +parts[0]);
+				if(parts[0].equals( "Number")) break;
+
+
 				line = bufferedReader.readLine();
 			}
 
@@ -74,18 +91,22 @@ public class TXTInput extends AbstractInput {
 		}
 	}
 	private void fromListToVariables() {
-		receiptID = Integer.parseInt(values.get(0));
-		date = values.get(1);
-		kind = values.get(2);
-		sales = Double.parseDouble(values.get(3));
-		items = Integer.parseInt(values.get(4));
-		companyName = values.get(5);
-		companyCountry = values.get(6);
-		companyCity = values.get(7);
-		companyStreet = values.get(8);
-		companyStreetNumber = Integer.parseInt(values.get(9));
+		try{
+			receiptID = Integer.parseInt(values.get(0));
+			date = values.get(1);
+			kind = values.get(2);
+			sales = Double.parseDouble(values.get(3));
+			items = Integer.parseInt(values.get(4));
+			companyName = values.get(5);
+			companyCountry = values.get(6);
+			companyCity = values.get(7);
+			companyStreet = values.get(8);
+			companyStreetNumber = Integer.parseInt(values.get(9));
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 
-		System.out.println(receiptID + " " + date + " " + kind + " " + sales + " " + items + " " + companyName + " " + companyCountry + " " + companyCity + " " + companyStreet + " " + companyStreetNumber);
+		//System.out.println(receiptID + " " + date + " " + kind + " " + sales + " " + items + " " + companyName + " " + companyCountry + " " + companyCity + " " + companyStreet + " " + companyStreetNumber);
 
 	}
 	public ReceiptManager getReceiptManager() {

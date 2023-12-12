@@ -234,14 +234,14 @@ public class ResultWindow extends JDialog {
 	}
 	private void outputTXTButtonPressed(ActionEvent evt) {
 		RepresentativeStatsTXTReport makeTXTFile = new RepresentativeStatsTXTReport();
-		makeTXTFile.RepresentativeTemplateMethod();
+		makeTXTFile.RepresentativeTemplateMethod(selectedManager);
 		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");
 
 		
 	}
 	private void outputXMLButtonPressed(ActionEvent evt) {
 		RepresentativeStatsXMLReport makeXMLFile = new RepresentativeStatsXMLReport();
-		makeXMLFile.RepresentativeTemplateMethod();
+		makeXMLFile.RepresentativeTemplateMethod(selectedManager);
 		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");		
 	}
 	private void okButtonPressed(ActionEvent evt) {

@@ -6,10 +6,10 @@ public abstract class AbstractRepresentativeStatsReport {
 
 	protected ReceiptManager receiptManager;
 
-	protected void setReceiptManager(ReceiptManager receiptManager) {
+	public void setReceiptManager(ReceiptManager receiptManager) {
 		this.receiptManager = receiptManager;
 	}
-	public final void RepresentativeTemplateMethod(){
+	public final void RepresentativeTemplateMethod(ReceiptManager receiptManager){
 		setReceiptManager(receiptManager);
 		saveFile();
 	}

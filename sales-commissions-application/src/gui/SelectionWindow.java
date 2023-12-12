@@ -400,10 +400,10 @@ public class SelectionWindow extends JDialog {
 		totalSales = calculateTotalSales(totalSalesCheckBox);
 		totalItems = (int) calculateTotalItems(totalItemsCheckBox);
 
-		shirtSales = (int)calculateSalesForEachItem(shirtRadio, "Shirt");
-		skirtSales = (int)calculateSalesForEachItem(skirtRadio, "Skirt");
-		coatsSales = (int)calculateSalesForEachItem(coatRadio, "Coat");
-		trousersSales = (int)calculateSalesForEachItem(trousersRadio, "Trouser");
+		shirtSales = (int)calculateSalesForEachItem(shirtRadio, "Shirts");
+		skirtSales = (int)calculateSalesForEachItem(skirtRadio, "Skirts");
+		coatsSales = (int)calculateSalesForEachItem(coatRadio, "Coats");
+		trousersSales = (int)calculateSalesForEachItem(trousersRadio, "Trousers");
 		
 		if(commissionCheckBox.isSelected()){
 			totalSales = selectedManager.calculateTotalSales();
@@ -517,7 +517,6 @@ public class SelectionWindow extends JDialog {
 	//NEED IMPROVEMENT
 	private void appendFile(){
 		selectedManager.getReceiptFileAppender().receiptTemplate(inputDialog.getInputFile(), selectedManager);
-		System.out.println(inputDialog.getInputFile().getAbsolutePath());
 	}
 	
 	

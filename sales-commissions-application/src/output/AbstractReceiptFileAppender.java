@@ -19,8 +19,14 @@ public abstract class AbstractReceiptFileAppender {
 
 
 	//This is the template method 
-	public final void receiptTemplate(File fileToAppend, ReceiptManager receipt){
-		appendToFile();
+	public final void receiptTemplate(File fileToAppend, ReceiptManager receiptManager){
+		try{
+			receipt = receiptManager.getLastReceipt();
+			appendToFile();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	protected abstract void appendToFile();
 	

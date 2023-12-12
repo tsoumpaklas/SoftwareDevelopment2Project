@@ -38,6 +38,9 @@ public abstract class AbstractInput {
 	public final void inputTemplate(File inputFile){
 		fileInput(inputFile);
 		readFile();
+		/*for(Receipt r: receiptManager.getReceipts()){
+			System.out.println(r.getReceiptID());
+		}*/
 	}
 
 	protected void fileInput(File inputFile) {
