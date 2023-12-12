@@ -1,6 +1,7 @@
 package data;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +94,7 @@ public class  ReceiptManager{
 	public void setAfm(String afm) {
 		this.afm = afm;
 	}
+
 
 	public AbstractReceiptFileAppender getReceiptFileAppender() {
 		return receiptFileAppender;

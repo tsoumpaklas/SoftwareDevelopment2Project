@@ -1,9 +1,11 @@
 package output;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class TXTReceiptFileAppender extends AbstractReceiptFileAppender{
+
 
 	private FileWriter fileWriter;
 	

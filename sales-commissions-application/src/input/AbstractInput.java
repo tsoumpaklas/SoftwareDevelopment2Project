@@ -23,7 +23,7 @@ public abstract class AbstractInput {
 
 	protected Integer receiptID;
     protected Integer items;
-	protected Integer companyStreetNumber;
+	protected int companyStreetNumber;
 
 	protected Double sales;
 

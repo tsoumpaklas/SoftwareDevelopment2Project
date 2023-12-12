@@ -1,5 +1,6 @@
 package output;
 
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -12,11 +13,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import data.Receipt;
+
 
 
 
 public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
+
+
 	private Document document;
 	 
 	protected void createDocument() {

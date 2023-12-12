@@ -30,10 +30,11 @@ public class TXTInput extends AbstractInput {
 	}
 
     private void readAgentDetails(BufferedReader bufferedReader) {
+		
 		try {
 			name = bufferedReader.readLine();
 			afm = bufferedReader.readLine();
-			addAgent();
+			System.out.println("Name: " + name + " AFM: " + afm + "\n");
 		} catch (IOException e) {
 		JOptionPane.showMessageDialog(null, "Error in readAgentDetails", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -83,6 +84,9 @@ public class TXTInput extends AbstractInput {
 		companyCity = values.get(7);
 		companyStreet = values.get(8);
 		companyStreetNumber = Integer.parseInt(values.get(9));
+
+		System.out.println(receiptID + " " + date + " " + kind + " " + sales + " " + items + " " + companyName + " " + companyCountry + " " + companyCity + " " + companyStreet + " " + companyStreetNumber);
+
 	}
 	public ReceiptManager getReceiptManager() {
 		return receiptManager;
