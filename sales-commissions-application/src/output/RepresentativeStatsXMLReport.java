@@ -18,7 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsReport{
 	
 	public void saveFile() {
-		String fullPathName =  "C:\\Users\\User\\Documents\\Reports" + receiptManager.getAfm() + "_SALES.xml";
+		String fullPathName =  "C:\\Users\\User\\Desktop\\" + receiptManager.getAfm() + "_SALES1.xml";
         try {
         	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         	 DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -44,9 +44,10 @@ public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsRep
 			createElements(document, root, "Name", String.valueOf(receiptManager.getName()));
 			createElements(document, root, "AFM", String.valueOf(receiptManager.getAfm()));
 			createElements(document, root, "TotalSales", String.valueOf(receiptManager.calculateTotalSales()));
-			createElements(document, root, "TrouserSales", String.valueOf(receiptManager.calculateSalesForEachItem("Trouser")));
-			createElements(document, root, "ShirtSales", String.valueOf(receiptManager.calculateSalesForEachItem("Shirt")));
-			createElements(document, root, "CoatsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Coat")));
+			createElements(document, root, "TrouserSales", String.valueOf(receiptManager.calculateSalesForEachItem("Trousers")));
+			createElements(document, root, "ShirtSales", String.valueOf(receiptManager.calculateSalesForEachItem("Shirts")));
+			createElements(document, root, "CoatsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Coats")));
+			createElements(document, root, "SkirtsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Skirts")));
 			createElements(document, root, "Commision", String.valueOf(receiptManager.calculateCommission(receiptManager.calculateTotalSales())));
 
 		}

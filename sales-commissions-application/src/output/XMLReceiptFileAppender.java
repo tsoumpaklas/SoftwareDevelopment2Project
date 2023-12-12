@@ -13,29 +13,30 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-
-
-
-
 public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
 
 
-	private Document document;
-	 
+	public void appendToFile(){
+		createDocument();
+
+	}
 	protected void createDocument() {
         try {
+			Document document = null;
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-     		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-    	    document = documentBuilder.parse(fileToAppend);
+			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			document = documentBuilder.parse(fileToAppend);
 
-			addContent();
+			addContent(document);
+			XMLAppender(document);
+			System.out.println(receiptManager.getReceipts().get(receiptManager.getReceipts().size() -2));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
-	public void addContent(){
+	public void addContent(Document document){
 			Node root = document.getFirstChild();
             
 
@@ -43,11 +44,11 @@ public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
             root.appendChild(rootElement);
 
             createElementAndAppend(document, rootElement, "ReceiptID", String.valueOf(receipt.getReceiptID()));
-            createElementAndAppend(document, rootElement, "Date", receipt.getDate());
+            createElementAndAppend(document, rootElement, "Date", String.valueOf(receipt.getDate()));
 			createElementAndAppend(document, rootElement, "Kind", String.valueOf(receipt.getKind()));
 			createElementAndAppend(document, rootElement, "Sales", String.valueOf(receipt.getSales()));
 			createElementAndAppend(document, rootElement, "Items", String.valueOf(receipt.getItems()));
-			createElementAndAppend(document, rootElement, "Company", String.valueOf(receipt.getCompany()));
+			createElementAndAppend(document, rootElement, "Company", String.valueOf(receipt.getCompany().getName()));
 			createElementAndAppend(document, rootElement, "Country", String.valueOf(receipt.getCompany().getAddress().getCountry()));
 			createElementAndAppend(document, rootElement, "City", String.valueOf(receipt.getCompany().getAddress().getCity()));
 			createElementAndAppend(document, rootElement, "Street", String.valueOf(receipt.getCompany().getAddress().getStreet()));
@@ -63,8 +64,8 @@ public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
 	
 }
 
-	@Override
-	protected void appendToFile() {
+
+	 private void XMLAppender(Document document) {
 		try{
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
