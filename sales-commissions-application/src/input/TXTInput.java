@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import data.ReceiptManager;
+
 
 public class TXTInput extends AbstractInput {
 
@@ -31,7 +35,7 @@ public class TXTInput extends AbstractInput {
 			afm = bufferedReader.readLine();
 			addAgent();
 		} catch (IOException e) {
-			e.printStackTrace();
+		JOptionPane.showMessageDialog(null, "Error in readAgentDetails", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -40,7 +44,7 @@ public class TXTInput extends AbstractInput {
         try {
             bufferedReader = new BufferedReader(new FileReader(inputFile));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+		JOptionPane.showMessageDialog(null, "Error in bufferedReader", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return bufferedReader;
     }
@@ -50,16 +54,22 @@ public class TXTInput extends AbstractInput {
 	private void processReceiptLine(BufferedReader bufferedReader) {
     	try {
 			String line = bufferedReader.readLine(); // Read the next line
-			if (line != null) {
+			while (line != null) {
+				// Skip empty lines or lines without ":"
+				if (line.trim().isEmpty() || !line.contains(":")) {
+					line = bufferedReader.readLine();
+					continue;
+				}
 				String[] parts = line.split(": ");
-				String value = parts[1]; // Get the second element
-				values.add(value);
+				if (parts.length > 1) {
+					String value = parts[1]; // Get the second element
+					values.add(value);
+				}
+				line = bufferedReader.readLine();
 			}
-			else{
-				System.err.println("Invalid line: " + line);
-			}
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error in processReceiptLine", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	private void fromListToVariables() {
@@ -74,5 +84,7 @@ public class TXTInput extends AbstractInput {
 		companyStreet = values.get(8);
 		companyStreetNumber = Integer.parseInt(values.get(9));
 	}
-
+	public ReceiptManager getReceiptManager() {
+		return receiptManager;
+	}
 }	

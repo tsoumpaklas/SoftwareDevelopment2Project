@@ -203,6 +203,7 @@ public class InputWindow extends JDialog {
 			File recieptFileTXT = TXTFileChooser.getSelectedFile();
 			TXTInput inputFileTXT = new TXTInput();
 			inputFileTXT.inputTemplate(recieptFileTXT);
+			receiptManager = inputFileTXT.getReceiptManager();
 			receiptManager.setFileType("TXT");
 			allReceiptManagers.add(receiptManager);
 

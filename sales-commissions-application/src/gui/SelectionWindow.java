@@ -66,9 +66,9 @@ public class SelectionWindow extends JDialog {
 	@SuppressWarnings("unused")
 	private String fileType;
 	
-	public SelectionWindow(InputWindow dialog, ReceiptManager selectedManager, String fileTypeFlag) {
+	public SelectionWindow(InputWindow dialog, ReceiptManager manager, String fileTypeFlag) {
 		inputDialog = dialog;
-		this.selectedManager = selectedManager;
+		selectedManager =  manager;
 		fileType = fileTypeFlag;
 		initialise();
 		
@@ -488,10 +488,10 @@ public class SelectionWindow extends JDialog {
 			selectedManager.getReceipts().add(receipt);
 			numOfReceipts++;
 			numOfReceiptsTextField.setText(Integer.toString(numOfReceipts));
-			JOptionPane.showMessageDialog(null,"� �������� ���������� ��������");
+			JOptionPane.showMessageDialog(null,"A new receipt has been added");
 
 		}catch (NumberFormatException e){
-			JOptionPane.showMessageDialog(null,"��� ������������ ����� ������ �����, ����������� ����");
+			JOptionPane.showMessageDialog(null,"Couldn't add the receipt, please check the fields");
 
 		}
 	}
@@ -517,6 +517,7 @@ public class SelectionWindow extends JDialog {
 	//NEED IMPROVEMENT
 	private void appendFile(){
 		selectedManager.getReceiptFileAppender().receiptTemplate(inputDialog.getInputFile(), selectedManager);
+		System.out.println(inputDialog.getInputFile().getAbsolutePath());
 	}
 	
 	
