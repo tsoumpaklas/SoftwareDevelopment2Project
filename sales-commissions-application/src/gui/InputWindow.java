@@ -46,7 +46,6 @@ public class InputWindow extends JDialog {
 	private  ReceiptManager receiptManager = new ReceiptManager();
 	private ReceiptManager selectedManager = null;
 	static InputWindow dialog = new InputWindow();
-	@SuppressWarnings("unused") 
 	private File inputFile;
 	private String fileTypeFlag;
 	/**
@@ -215,7 +214,7 @@ public class InputWindow extends JDialog {
 				}
 			}
 			if(agentDuplicate == true){
-				JOptionPane.showMessageDialog(null,"� ������������ ������� ��� ��� �����");
+				JOptionPane.showMessageDialog(null,"You have already inserted this agent");
 
 			}
 			else{
@@ -226,10 +225,10 @@ public class InputWindow extends JDialog {
 			
 		}catch (NullPointerException e){
 			
-			JOptionPane.showMessageDialog(null,"��� ���������� ������ ������");
+			JOptionPane.showMessageDialog(null,"You have not chosen a file", "Error", JOptionPane.ERROR_MESSAGE);
 
 		}catch (NumberFormatException e){
-			JOptionPane.showMessageDialog(null,"�������� ������ �������� ���� ��� �������� ��� �������");
+			JOptionPane.showMessageDialog(null,"The file format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}
@@ -256,7 +255,7 @@ public class InputWindow extends JDialog {
 				}
 			}
 			if(agentDuplicate == true){
-				JOptionPane.showMessageDialog(null,"� ������������ ������� ��� ��� �����");
+				JOptionPane.showMessageDialog(null,"You have already inserted this agent");
 
 			}
 			else{
@@ -266,10 +265,9 @@ public class InputWindow extends JDialog {
 			}
 		}catch (IllegalArgumentException e){
 		
-			JOptionPane.showMessageDialog(null,"��� ���������� ������ ������");
+			JOptionPane.showMessageDialog(null,"Import from XML failed");
 
 		}
-        
              
 	}
 	
@@ -294,7 +292,7 @@ public class InputWindow extends JDialog {
 	
 	private void okButtonPressed(ActionEvent evt) {
 		if(agentsList.isSelectionEmpty()){
-			JOptionPane.showMessageDialog(null,"��� ����� �������� �����������");
+			JOptionPane.showMessageDialog(null,"Please choose one of the possible ways of importing data");
 
 		}
 		else{

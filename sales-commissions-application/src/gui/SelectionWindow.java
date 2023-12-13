@@ -386,7 +386,7 @@ public class SelectionWindow extends JDialog {
 			agentNameTextField.setText(selectedManager.getName());
 		}catch(NullPointerException e){
 			
-			JOptionPane.showMessageDialog(null,"�������� ������ ��������, ����������� ����");
+			JOptionPane.showMessageDialog(null,"Please select a manager first");
 
 		}
 		
@@ -452,7 +452,7 @@ public class SelectionWindow extends JDialog {
 				countryTextField.getText(),cityTextField.getText(),streetTextField.getText(),numberTextField.getText()));
 
 		if(textFields.isEmpty()){
-			JOptionPane.showMessageDialog(null,"�������� �������� ��������, ����������� ����");
+			JOptionPane.showMessageDialog(null,"Please fill all the fields");
 		}
 		else{
 			addReceipt();
@@ -488,7 +488,7 @@ public class SelectionWindow extends JDialog {
 			selectedManager.getReceipts().add(receipt);
 			numOfReceipts++;
 			numOfReceiptsTextField.setText(Integer.toString(numOfReceipts));
-			JOptionPane.showMessageDialog(null,"A new receipt has been added");
+			JOptionPane.showMessageDialog(null,"A new receipt has been added succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
 		}catch (NumberFormatException e){
 			JOptionPane.showMessageDialog(null,"Couldn't add the receipt, please check the fields");

@@ -11,20 +11,15 @@ public abstract class AbstractReceiptFileAppender {
 		this.fileToAppend = fileToAppend;
 	}
 	protected File fileToAppend;
-
-	/*Receipt contains: receiptID, date, sales,
-	  items, company, kind */
 	protected Receipt receipt;
-	protected ReceiptManager receiptManager;  // Remove the semicolon here.
-
-
-	//This is the template method 
+	protected ReceiptManager receiptManager;  
+ 
 	public final void receiptTemplate(File fileToAppend, ReceiptManager receiptManager){
 			receipt = receiptManager.getLastReceipt();
-			//System.out.println(receipt.getReceiptID());
 			appendToFile();
 		
 	}
+	
 	protected abstract void appendToFile();
 	
 }

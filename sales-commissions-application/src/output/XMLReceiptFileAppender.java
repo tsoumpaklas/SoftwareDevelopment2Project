@@ -13,13 +13,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
+public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender {
 
 
-	public void appendToFile(){
+	public void appendToFile() {
 		createDocument();
 
 	}
+
 	protected void createDocument() {
         try {
 			Document document = null;
@@ -36,10 +37,9 @@ public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
         }
     }
 
-	public void addContent(Document document){
+	public void addContent(Document document) {
 			Node root = document.getFirstChild();
             
-
             Element rootElement = document.createElement("Receipt");
             root.appendChild(rootElement);
 
@@ -57,12 +57,10 @@ public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
 	
 
     private void createElementAndAppend(Document doc, Element parent, String name, String content) {
-      Element element = doc.createElement(name);
-	  element.appendChild(doc.createTextNode(content));
-	  parent.appendChild(element);
-
-	
-}
+     	 Element element = doc.createElement(name);
+	  	 element.appendChild(doc.createTextNode(content));
+	 	 parent.appendChild(element);
+	}
 
 
 	 private void XMLAppender(Document document) {
@@ -75,10 +73,10 @@ public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender{
 			
 			StreamResult result = new StreamResult(fileToAppend);
 			transformer.transform(source, result);
+
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-		
+			}	
 	}
-
+	
 }

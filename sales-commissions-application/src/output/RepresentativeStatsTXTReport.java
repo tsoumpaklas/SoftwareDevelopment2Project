@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 
 
-public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsReport{
+public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsReport {
 	
 	public void saveFile() {
         try{
@@ -32,18 +32,19 @@ public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsRep
         }
 
         bufferedWriter.write("Commision " +receiptManager.calculateCommission(receiptManager.calculateTotalSales()));
-
         bufferedWriter.close();
 
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, "Error writing file", "Error", JOptionPane.ERROR_MESSAGE);
         }
 	}
+
     public void writeEmptyLines(BufferedWriter bufferedWriter, int lines) throws IOException {
         for (int i = 0; i < lines; i++) {
             bufferedWriter.newLine();
         }
     }
+
     private void writeLine(BufferedWriter writer, String label, Object value) throws IOException {
         writer.write(label + value);
         writer.newLine();

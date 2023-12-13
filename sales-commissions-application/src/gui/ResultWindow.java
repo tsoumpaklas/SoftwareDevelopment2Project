@@ -198,51 +198,35 @@ public class ResultWindow extends JDialog {
 		updateResults();
 		
 	}
-	
 	private void updateResults() {
-
-		if(totalSales>=0)
-			totalSalesTextField.setText(Double.toString(totalSales));
-		else 
-			totalSalesTextField.setEnabled(false);
-		if(totalItems>=0)
-			totalItemsTextField.setText(Integer.toString(totalItems));
-		else 
-			totalItemsTextField.setEnabled(false);
-		if(shirtSales>=0)
-			shirtSalesTextField.setText(Float.toString(shirtSales));
-		else 
-			shirtSalesTextField.setEnabled(false);
-		if(skirtSales>=0)
-			skirtSalesTextField.setText(Float.toString(skirtSales));
-		else 
-			skirtSalesTextField.setEnabled(false);
-		if(coatsSales>=0)
-			coatSalesTextField.setText(Float.toString(coatsSales));
-		else 
-			coatSalesTextField.setEnabled(false);
-		if(trousersSales>=0)
-			trouserSalesTextField.setText(Float.toString(trousersSales));
-		else 
-			shirtSalesTextField.setEnabled(false);
-		if(commission>=0)
-			commissionTextField.setText(Double.toString(commission));
-		else 
-			commissionTextField.setEnabled(false);
-	
-				
+		updateTextField(totalSales, totalSalesTextField);
+		updateTextField(totalItems, totalItemsTextField);
+		updateTextField(shirtSales, shirtSalesTextField);
+		updateTextField(skirtSales, skirtSalesTextField);
+		updateTextField(coatsSales, coatSalesTextField);
+		updateTextField(trousersSales, trouserSalesTextField);
+		updateTextField(commission, commissionTextField);
 	}
+	
+	private void updateTextField(double value, JTextField textField) {
+		if (value >= 0) {
+			textField.setText(Double.toString(value));
+		} else {
+			textField.setEnabled(false);
+		}
+	}	
+
 	private void outputTXTButtonPressed(ActionEvent evt) {
 		RepresentativeStatsTXTReport makeTXTFile = new RepresentativeStatsTXTReport();
 		makeTXTFile.RepresentativeTemplateMethod(selectedManager);
-		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");
+		JOptionPane.showMessageDialog(null,"The export to TXT file was successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
 		
 	}
 	private void outputXMLButtonPressed(ActionEvent evt) {
 		RepresentativeStatsXMLReport makeXMLFile = new RepresentativeStatsXMLReport();
 		makeXMLFile.RepresentativeTemplateMethod(selectedManager);
-		JOptionPane.showMessageDialog(null,"� ������� ������������ ��������");		
+		JOptionPane.showMessageDialog(null,"The export to XML file was successful!", "Success", JOptionPane.INFORMATION_MESSAGE);		
 	}
 	private void okButtonPressed(ActionEvent evt) {
 		System.exit(0);		

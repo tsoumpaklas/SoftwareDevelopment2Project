@@ -1,6 +1,5 @@
 package input;
 
-import java.io.File;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,11 +24,12 @@ public class XMLInput extends AbstractInput {
 
             processAgent(nodeList);
             processReceipts(nodeList);
-			
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error message");
+            JOptionPane.showMessageDialog(null, "The file you have chosen is not a XML file or it is empty", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private Document createDocument() throws Exception {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -40,10 +40,14 @@ public class XMLInput extends AbstractInput {
     }
 
     private void processAgent(NodeList nodeList) {
-        Element agentElement = (Element) nodeList.item(0);
-        name = getTextContent(agentElement, "Name");
-        afm = getTextContent(agentElement, "AFM");
-        addAgent();
+        try{
+            Element agentElement = (Element) nodeList.item(0);
+            name = getTextContent(agentElement, "Name");
+            afm = getTextContent(agentElement, "AFM");
+            addAgent();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void processReceipts(NodeList nodeList) {
@@ -71,6 +75,8 @@ public class XMLInput extends AbstractInput {
         addReceipt();
     }
 
+
+
     private String getTextContent(Element element, String tagName) {
         return element.getElementsByTagName(tagName).item(0).getTextContent().trim();
     }
@@ -78,6 +84,8 @@ public class XMLInput extends AbstractInput {
 	public ReceiptManager getReceiptManager(){
 		return receiptManager;
 	}
+
+    
 }
 
 

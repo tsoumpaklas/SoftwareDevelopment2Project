@@ -14,28 +14,33 @@ import data.ReceiptManager;
 
 public class TXTInput extends AbstractInput {
 
+private List<String> values = new ArrayList<>();
+
     @Override
     public void readFile() {
-        BufferedReader bufferedReader = initializeBufferedReader();
-        readAgentDetails(bufferedReader);
-		//int n = 0;
-		while(true) {
-			//n++;
-			processReceiptLine(bufferedReader);
-			//System.out.println("WTF S GOING  " +n );
-			System.out.println(values.toString());
-			if (values.isEmpty()) {
-				//System.out.println("I went there "+n);
-				break;
-    		}
-			//System.out.println("WTF S GOING  " +n );
-			fromListToVariables();
-			//System.out.println("WTF S GOING  " +n );
-			addReceipt();
+		try{
+			BufferedReader bufferedReader = initializeBufferedReader();
+			readAgentDetails(bufferedReader);
 			
-			values.clear();
+			while(true) {
+				
+				processReceiptLine(bufferedReader);
+				
+				System.out.println(values.toString());
+				if (values.isEmpty()) {
+					break;
+				}
+				
+				fromListToVariables();
+				addReceipt();
+				
+				values.clear();
+			}
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "The file you have chosen is not a TXT file or it is empty", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 
     private void readAgentDetails(BufferedReader bufferedReader) {
 		
@@ -44,12 +49,13 @@ public class TXTInput extends AbstractInput {
 			name = Name[1];
 			String Afm[] = bufferedReader.readLine().trim().split(":");
 			afm = Afm[1];
-			//System.out.println("Name: " + name + " AFM: " + afm + "\n");
+
 			addAgent();
-		} catch (IOException e) {
-		JOptionPane.showMessageDialog(null, "Error in readAgentDetails", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, "Format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 
     private BufferedReader initializeBufferedReader() {
         BufferedReader bufferedReader = null;
@@ -61,37 +67,36 @@ public class TXTInput extends AbstractInput {
         return bufferedReader;
     }
 
-	private List<String> values = new ArrayList<>();
 
 	private void processReceiptLine(BufferedReader bufferedReader) {
     	try {
-			String line = bufferedReader.readLine(); // Read the next line
+			String line = bufferedReader.readLine(); 
 			while(line != null) {
-				//System.out.println(line);
 				line = line.trim();
-				// Skip empty lines or lines without ":"
 				if (!line.contains(":")) {
 					line = bufferedReader.readLine();
 					continue;
 				}
+
 				String[] parts = line.split(":");
 				if (parts.length > 1) {
-					String value = parts[1].trim(); // Get the second element
+					String value = parts[1].trim(); 
 					values.add(value);
 				}
-				//System.out.println("THIS IS PARTS[0]: " +parts[0]);
-				if(parts[0].equals( "Number")) break;
 
+				if(parts[0].equals( "Number")) break;
 
 				line = bufferedReader.readLine();
 			}
 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error in processReceiptLine", "Error", JOptionPane.ERROR_MESSAGE);
+			System.out.println(e.getMessage());
 		}
 	}
+
+
 	private void fromListToVariables() {
-		try{
+	
 			receiptID = Integer.parseInt(values.get(0));
 			date = values.get(1);
 			kind = values.get(2);
@@ -102,14 +107,12 @@ public class TXTInput extends AbstractInput {
 			companyCity = values.get(7);
 			companyStreet = values.get(8);
 			companyStreetNumber = Integer.parseInt(values.get(9));
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-
-		//System.out.println(receiptID + " " + date + " " + kind + " " + sales + " " + items + " " + companyName + " " + companyCountry + " " + companyCity + " " + companyStreet + " " + companyStreetNumber);
-
+	
 	}
+
+
 	public ReceiptManager getReceiptManager() {
 		return receiptManager;
 	}
+	
 }	

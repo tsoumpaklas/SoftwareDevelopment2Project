@@ -13,9 +13,6 @@ public class Company {
 			return companyName;
 		}
 		
-		public void setName(String name) {
-			this.companyName = name;
-		}
 		
 		
 		public Address getCompanyAddress(){
@@ -24,5 +21,11 @@ public class Company {
 		}
 		public Address getAddress(){
 			return companyAddress;
+		}
+
+
+
+		public void setName(String name) {
+			this.companyName = name;
 		}
 }
