@@ -11,7 +11,9 @@ public abstract class AbstractRepresentativeStatsReport {
 	}
 	public final void RepresentativeTemplateMethod(ReceiptManager receiptManager){
 		setReceiptManager(receiptManager);
-		saveFile();
+		createFile();
+		addContent();
 	}
-	public abstract void saveFile();
+	protected abstract void createFile();
+	protected abstract void addContent();
 }

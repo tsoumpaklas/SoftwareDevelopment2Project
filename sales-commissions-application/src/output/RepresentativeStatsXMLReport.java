@@ -16,32 +16,29 @@ import javax.xml.transform.stream.StreamResult;
 
 
 public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsReport	{
-	
-	public void saveFile() {
-		String fullPathName =  "C:\\Users\\User\\Desktop\\" + receiptManager.getAfm() + "_SALES1.xml";
-        try {
-        	 DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-        	 DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-        	 Document document = documentBuilder.newDocument();
 
-        	 Element agentElement = document.createElement("Agent");
-        	 document.appendChild(agentElement);
+	private Document document;
+	private Element agentElement;
+	private String fullPathName;
 
-			 addContent(document);
-			 writeToFile(document, fullPathName);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-       		 }
+	@Override
+	protected void createFile() {
+		try{
+			fullPathName =  "C:\\Users\\Nikos\\Documents\\MathimataSxolis\\AnaptyxiLogismikou2\\AllExports\\" + receiptManager.getAfm() + "_SALES1.xml";
+			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			document = documentBuilder.newDocument();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
-	public void createElements(Document document, Element parent, String name, String content) {
-		Element element = document.createElement(name);
-		element.appendChild(document.createTextNode(content));
-		parent.appendChild(element);
-	}
+	@Override
+	protected void addContent() {
+        agentElement = document.createElement("Agent");
+        document.appendChild(agentElement);
 
-	public void addContent(Document document)  {
 		Element root = (Element) document.getFirstChild();
 		createElements(document, root, "Name", String.valueOf(receiptManager.getName()));
 		createElements(document, root, "AFM", String.valueOf(receiptManager.getAfm()));
@@ -51,6 +48,15 @@ public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsRep
 		createElements(document, root, "CoatsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Coats")));
 		createElements(document, root, "SkirtsSales", String.valueOf(receiptManager.calculateSalesForEachItem("Skirts")));
 		createElements(document, root, "Commision", String.valueOf(receiptManager.calculateCommission(receiptManager.calculateTotalSales())));
+
+		writeToFile(document, fullPathName);
+	}
+
+
+	public void createElements(Document document, Element parent, String name, String content) {
+		Element element = document.createElement(name);
+		element.appendChild(document.createTextNode(content));
+		parent.appendChild(element);
 	}
 
 	public void writeToFile(Document document, String fullPathName)	{

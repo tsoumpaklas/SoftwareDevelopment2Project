@@ -16,37 +16,44 @@ import data.ReceiptManager;
 
 public class XMLInput extends AbstractInput {            
 
+    private Document document = null;
+    private NodeList nodeList = null;
+    private Element agentElement = null;
 
-    public void readFile() {
-        try {
-            Document document = createDocument();
-            NodeList nodeList = document.getElementsByTagName("Agent");
+    @Override
+    protected void initializeFileReader() {
+        try{
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            document = documentBuilder.parse(inputFile);
+            document.getDocumentElement().normalize();
 
-            processAgent(nodeList);
-            processReceipts(nodeList);
+            nodeList = document.getElementsByTagName("Agent");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "The file you have chosen is not a XML file or it is empty", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error in bufferedReader", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
 
-    private Document createDocument() throws Exception {
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse(inputFile);
-        doc.getDocumentElement().normalize();
-        return doc;
-    }
-
-    private void processAgent(NodeList nodeList) {
-        try{
-            Element agentElement = (Element) nodeList.item(0);
-            name = getTextContent(agentElement, "Name");
-            afm = getTextContent(agentElement, "AFM");
-            addAgent();
+    @Override
+    protected void readAgent() {
+         try{
+             agentElement = (Element) nodeList.item(0);
+             name = getTextContent(agentElement, "Name");
+             afm = getTextContent(agentElement, "AFM");
+             addAgent();
+             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
+        }       
+    }
+    public void readFile() {
+        try {
+            processReceipts(nodeList);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "The file you have chosen is not a XML file or it is empty", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -84,7 +91,6 @@ public class XMLInput extends AbstractInput {
 	public ReceiptManager getReceiptManager(){
 		return receiptManager;
 	}
-
     
 }
 

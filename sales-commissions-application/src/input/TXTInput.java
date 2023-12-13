@@ -15,13 +15,34 @@ import data.ReceiptManager;
 public class TXTInput extends AbstractInput {
 
 private List<String> values = new ArrayList<>();
+private BufferedReader bufferedReader = null;
 
+	@Override
+	protected void initializeFileReader() {
+        try {
+            bufferedReader = new BufferedReader(new FileReader(inputFile));
+        } catch (FileNotFoundException e) {
+		JOptionPane.showMessageDialog(null, "Error in bufferedReader", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+	}
+
+
+	@Override
+	protected void readAgent() {
+		try {
+			String Name[] = bufferedReader.readLine().trim().split(":");
+			name = Name[1];
+			String Afm[] = bufferedReader.readLine().trim().split(":");
+			afm = Afm[1];
+
+			addAgent();
+		} catch (Exception e) {
+		JOptionPane.showMessageDialog(null, "Format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
     @Override
     public void readFile() {
-		try{
-			BufferedReader bufferedReader = initializeBufferedReader();
-			readAgentDetails(bufferedReader);
-			
+		try{		
 			while(true) {
 				
 				processReceiptLine(bufferedReader);
@@ -40,33 +61,6 @@ private List<String> values = new ArrayList<>();
 			JOptionPane.showMessageDialog(null, "The file you have chosen is not a TXT file or it is empty", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-
-    private void readAgentDetails(BufferedReader bufferedReader) {
-		
-		try {
-			String Name[] = bufferedReader.readLine().trim().split(":");
-			name = Name[1];
-			String Afm[] = bufferedReader.readLine().trim().split(":");
-			afm = Afm[1];
-
-			addAgent();
-		} catch (Exception e) {
-		JOptionPane.showMessageDialog(null, "Format is not correct", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-
-    private BufferedReader initializeBufferedReader() {
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(inputFile));
-        } catch (FileNotFoundException e) {
-		JOptionPane.showMessageDialog(null, "Error in bufferedReader", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return bufferedReader;
-    }
-
 
 	private void processReceiptLine(BufferedReader bufferedReader) {
     	try {

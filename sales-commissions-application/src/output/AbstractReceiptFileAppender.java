@@ -16,10 +16,12 @@ public abstract class AbstractReceiptFileAppender {
  
 	public final void receiptTemplate(File fileToAppend, ReceiptManager receiptManager){
 			receipt = receiptManager.getLastReceipt();
+			initializeAppender();
 			appendToFile();
 		
 	}
 	
+	protected abstract void initializeAppender();
 	protected abstract void appendToFile();
 	
 }

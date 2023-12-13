@@ -8,10 +8,18 @@ public class TXTReceiptFileAppender extends AbstractReceiptFileAppender{
 
 	private FileWriter fileWriter;
 	
+		@Override
+	protected void initializeAppender() {
+		try{
+		fileWriter = new FileWriter(fileToAppend, true);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	protected void appendToFile() {
 		try {
-			fileWriter = new FileWriter(fileToAppend, true);
 			fileWriter.write("\n" + "Receipt ID: " + receipt.getReceiptID() + "\n");
 			fileWriter.write("Date: " + receipt.getDate() + "\n");
 			fileWriter.write("Kind: " + receipt.getKind() + "\n");
@@ -29,6 +37,5 @@ public class TXTReceiptFileAppender extends AbstractReceiptFileAppender{
 		}
 
 	}
-
 
 }

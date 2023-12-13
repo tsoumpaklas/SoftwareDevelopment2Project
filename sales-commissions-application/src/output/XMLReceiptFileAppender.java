@@ -15,18 +15,27 @@ import org.w3c.dom.Node;
 
 public class XMLReceiptFileAppender  extends AbstractReceiptFileAppender {
 
+	Document document = null;
 
-	public void appendToFile() {
+	@Override
+	protected void initializeAppender() {
+		try{
+			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			document = documentBuilder.parse(fileToAppend);	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void appendToFile() {
 		createDocument();
 
 	}
 
 	protected void createDocument() {
         try {
-			Document document = null;
-			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-			document = documentBuilder.parse(fileToAppend);
 
 			addContent(document);
 			XMLAppender(document);

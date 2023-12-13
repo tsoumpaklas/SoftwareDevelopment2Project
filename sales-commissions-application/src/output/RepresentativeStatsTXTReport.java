@@ -12,34 +12,44 @@ import javax.swing.JOptionPane;
 
 public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsReport {
 	
-	public void saveFile() {
+    private BufferedWriter bufferedWriter;
+    @Override
+    protected void createFile() {
         try{
-        String fullPathName =  "C:\\Users\\User\\Desktop\\" + receiptManager.getAfm() + "_SALES.txt";
-        BufferedWriter bufferedWriter  = new BufferedWriter(new FileWriter(new File(fullPathName)));
-
-        bufferedWriter.write("Name:" + receiptManager.getName());
-        writeEmptyLines(bufferedWriter, 1);
-
-        bufferedWriter.write("AFM:" + receiptManager.getAfm());
-        writeEmptyLines(bufferedWriter, 3);
-
-        bufferedWriter.write("Total Sales:" + receiptManager.calculateTotalSales());
-        writeEmptyLines(bufferedWriter, 1);
-
-        String[] items = {"Trousers", "Skirts", "Shirts", "Coats"};
-        for(String item: items){
-            writeLine(bufferedWriter, item + "Sales: ", receiptManager.calculateSalesForEachItem(item));
+            String fullPathName =  "C:\\Users\\Nikos\\Documents\\MathimataSxolis\\AnaptyxiLogismikou2\\AllExports\\" + receiptManager.getAfm() + "_SALES.txt";
+            bufferedWriter  = new BufferedWriter(new FileWriter(new File(fullPathName)));
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Error creating file", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-        bufferedWriter.write("Commision " +receiptManager.calculateCommission(receiptManager.calculateTotalSales()));
-        bufferedWriter.close();
+    @Override
+    protected void addContent() {
+        try{
+             bufferedWriter.write("Name:" + receiptManager.getName());
+            writeEmptyLines(bufferedWriter, 1);
+
+            bufferedWriter.write("AFM:" + receiptManager.getAfm());
+            writeEmptyLines(bufferedWriter, 3);
+
+            bufferedWriter.write("Total Sales:" + receiptManager.calculateTotalSales());
+            writeEmptyLines(bufferedWriter, 1);
+
+            String[] items = {"Trousers", "Skirts", "Shirts", "Coats"};
+            for(String item: items){
+                writeLine(bufferedWriter, item + "Sales: ", receiptManager.calculateSalesForEachItem(item));
+            }
+
+            bufferedWriter.write("Commision " +receiptManager.calculateCommission(receiptManager.calculateTotalSales()));
+            bufferedWriter.close();
 
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, "Error writing file", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-	}
+         }
 
-    public void writeEmptyLines(BufferedWriter bufferedWriter, int lines) throws IOException {
+    }
+
+    private void writeEmptyLines(BufferedWriter bufferedWriter, int lines) throws IOException {
         for (int i = 0; i < lines; i++) {
             bufferedWriter.newLine();
         }
@@ -49,6 +59,9 @@ public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsRep
         writer.write(label + value);
         writer.newLine();
     }
+
+
+
 
  }
 

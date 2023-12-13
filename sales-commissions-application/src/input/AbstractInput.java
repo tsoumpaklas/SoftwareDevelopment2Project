@@ -37,6 +37,8 @@ public abstract class AbstractInput {
 	
 	public final void inputTemplate(File inputFile){
 		fileInput(inputFile);
+		initializeFileReader();
+		readAgent();
 		readFile();
 	}
 
@@ -44,6 +46,11 @@ public abstract class AbstractInput {
 		this.inputFile = inputFile;
 		inputFile = inputFile.getAbsoluteFile();
 	}
+
+	protected abstract void initializeFileReader();
+	protected abstract void readAgent();
+
+
 	protected void addAgent() {
 		receiptManager.setName(name);
 		receiptManager.setAfm(afm);
