@@ -40,10 +40,10 @@ public class TXTInput extends AbstractInput {
     private void readAgentDetails(BufferedReader bufferedReader) {
 		
 		try {
-			String n[] = bufferedReader.readLine().trim().split(":");
-			name = n[1];
-			String a[] = bufferedReader.readLine().trim().split(":");
-			afm = a[1];
+			String Name[] = bufferedReader.readLine().trim().split(":");
+			name = Name[1];
+			String Afm[] = bufferedReader.readLine().trim().split(":");
+			afm = Afm[1];
 			//System.out.println("Name: " + name + " AFM: " + afm + "\n");
 			addAgent();
 		} catch (IOException e) {
