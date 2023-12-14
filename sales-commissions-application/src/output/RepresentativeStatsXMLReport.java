@@ -19,13 +19,11 @@ public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsRep
 
 	private Document document;
 	private Element agentElement;
-	private String fullPathName;
 
 
 	@Override
 	protected void createFile() {
 		try{
-			fullPathName =  "C:\\Users\\Nikos\\Documents\\MathimataSxolis\\AnaptyxiLogismikou2\\AllExports\\" + receiptManager.getAfm() + "_SALES1.xml";
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 			document = documentBuilder.newDocument();
@@ -69,7 +67,7 @@ public class RepresentativeStatsXMLReport extends AbstractRepresentativeStatsRep
 			StreamResult streamResult = new StreamResult(new File(fullPathName));
 			transformer.transform(domSource, streamResult);
 			}catch(Exception e)	{
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 				}	
 	}
 

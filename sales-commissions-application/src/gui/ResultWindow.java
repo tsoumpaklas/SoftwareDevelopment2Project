@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +15,7 @@ import java.awt.Font;
 
 import javax.swing.UIManager;
 
+import output.AbstractRepresentativeStatsReport;
 import output.RepresentativeStatsTXTReport;
 import output.RepresentativeStatsXMLReport;
 import data.ReceiptManager;
@@ -21,6 +23,7 @@ import data.ReceiptManager;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class ResultWindow extends JDialog {
@@ -216,21 +219,36 @@ public class ResultWindow extends JDialog {
 		}
 	}	
 
-	private void outputTXTButtonPressed(ActionEvent evt) {
-		RepresentativeStatsTXTReport makeTXTFile = new RepresentativeStatsTXTReport();
-		makeTXTFile.RepresentativeTemplateMethod(selectedManager);
-		JOptionPane.showMessageDialog(null,"The export to TXT file was successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+	private void outputTXTButtonPressed(ActionEvent event) {
+		outputButtonPressed(event, "txt", new RepresentativeStatsTXTReport());
+	}
+	private void outputXMLButtonPressed(ActionEvent event) {
+		outputButtonPressed(event, "xml", new RepresentativeStatsXMLReport());
+	}
 
-		
+	private void outputButtonPressed(ActionEvent event, String extension, AbstractRepresentativeStatsReport report) {
+		try{
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int option = fileChooser.showSaveDialog(null);
+			
+			if (option == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				String fullPathName = file.getAbsolutePath() + "\\" + selectedManager.getAfm() + "_SALES." + extension;
+				report.setFullPathName(fullPathName);
+				report.RepresentativeTemplateMethod(selectedManager);
+				JOptionPane.showMessageDialog(null,"The export to " + extension.toUpperCase() + " file was successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					System.out.println("No directory selected");
+				}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
-	private void outputXMLButtonPressed(ActionEvent evt) {
-		RepresentativeStatsXMLReport makeXMLFile = new RepresentativeStatsXMLReport();
-		makeXMLFile.RepresentativeTemplateMethod(selectedManager);
-		JOptionPane.showMessageDialog(null,"The export to XML file was successful!", "Success", JOptionPane.INFORMATION_MESSAGE);		
-	}
+
 	private void okButtonPressed(ActionEvent evt) {
 		System.exit(0);		
-	}
+		}
 	
 	private void cancelButtonPressed(ActionEvent evt) {
 		selectionWindow.setVisible(true);

@@ -16,7 +16,6 @@ public class RepresentativeStatsTXTReport extends AbstractRepresentativeStatsRep
     @Override
     protected void createFile() {
         try{
-            String fullPathName =  "C:\\Users\\Nikos\\Documents\\MathimataSxolis\\AnaptyxiLogismikou2\\AllExports\\" + receiptManager.getAfm() + "_SALES.txt";
             bufferedWriter  = new BufferedWriter(new FileWriter(new File(fullPathName)));
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, "Error creating file", "Error", JOptionPane.ERROR_MESSAGE);
