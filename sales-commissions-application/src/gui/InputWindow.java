@@ -1,4 +1,5 @@
 package gui;
+import input.HTMLInput;
 import input.TXTInput;
 import input.XMLInput;
 
@@ -91,6 +92,10 @@ public class InputWindow extends JDialog {
 				buttonXMLInput.setBackground(UIManager.getColor("InternalFrame.borderLight"));
 				buttonXMLInput.setFocusPainted(false);
 				
+				JButton buttonHTMLInput = new JButton("\u0395\u03B9\u03C3\u03B1\u03B3\u03C9\u03B3\u03AE \u03B1\u03C0\u03CC HTML");
+				buttonHTMLInput.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+				buttonHTMLInput.setBackground(UIManager.getColor("InternalFrame.borderLight"));
+				buttonHTMLInput.setFocusPainted(false);
 				
 				JLabel label = new JLabel("\u0395\u03C0\u03B9\u03BB\u03AD\u03BE\u03C4\u03B5 \u03B5\u03AF\u03B4\u03BF\u03C2 \u03B1\u03C1\u03C7\u03B5\u03AF\u03BF\u03C5 \u03B3\u03B9\u03B1 \u03C6\u03CC\u03C1\u03C4\u03C9\u03C3\u03B7 \u03B1\u03C0\u03BF\u03B4\u03B5\u03AF\u03BE\u03B5\u03C9\u03BD:");
 				label.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -141,7 +146,8 @@ public class InputWindow extends JDialog {
 								.addGroup(gl_inputWindowPanel.createParallelGroup(Alignment.LEADING, false)
 									.addComponent(label)
 									.addComponent(buttonTXTInput, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-									.addComponent(buttonXMLInput, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+									.addComponent(buttonXMLInput, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
+									.addComponent(buttonHTMLInput, GroupLayout.DEFAULT_SIZE, 307 ,Short.MAX_VALUE))
 							.addGap(18)
 							.addGroup(gl_inputWindowPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(agentsList, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
@@ -164,8 +170,10 @@ public class InputWindow extends JDialog {
 								.addGroup(gl_inputWindowPanel.createSequentialGroup()
 									.addComponent(buttonTXTInput, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
 									.addGap(42)
-									.addComponent(buttonXMLInput, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-								.addComponent(agentsList, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE))
+									.addComponent(buttonXMLInput, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+									.addGap(42)
+									.addComponent(buttonHTMLInput, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+								.addComponent(agentsList, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
 							.addGap(139)
 							.addGroup(gl_inputWindowPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
@@ -174,14 +182,20 @@ public class InputWindow extends JDialog {
 				);
 				inputWindowPanel.setLayout(gl_inputWindowPanel);
 				buttonTXTInput.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						insertFromTXT(evt);
+					public void actionPerformed(ActionEvent event) {
+						insertFromTXT(event);
 					}
 				});
 				
 				buttonXMLInput.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						insertFromXML(e);
+					public void actionPerformed(ActionEvent event) {
+						insertFromXML(event);
+					}
+				});
+
+				buttonHTMLInput.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent event) {
+						insertFromHTML(event);
 					}
 				});
 	}
@@ -269,6 +283,45 @@ public class InputWindow extends JDialog {
 
 		}
              
+	}
+
+	private void insertFromHTML(ActionEvent evt){
+
+		JFileChooser XMLFileChooser;
+		XMLFileChooser = new JFileChooser();     
+		XMLFileChooser.setFileSelectionMode(JFileChooser.APPROVE_OPTION);		       
+		XMLFileChooser.showOpenDialog(null);
+		boolean agentDuplicate = false;
+		try{
+			File recieptFileHTML = XMLFileChooser.getSelectedFile();
+			HTMLInput inputFileHTML = new HTMLInput();	
+			inputFileHTML.inputTemplate(recieptFileHTML);
+			receiptManager = inputFileHTML.getReceiptManager();
+			receiptManager.setFileType("HTML");
+			receiptManager.getReceiptFileAppender().setFileToAppend(recieptFileHTML);
+			allReceiptManagers.add(receiptManager);
+
+			for(int i = 0; i< listModel.getSize(); i++){
+				if(receiptManager.getName().equals(listModel.getElementAt(i))){
+					agentDuplicate = true;
+
+				}
+			}
+			if(agentDuplicate == true){
+				JOptionPane.showMessageDialog(null,"You have already inserted this agent");
+
+			}
+			else{
+				listModel.addElement(receiptManager.getName());
+				agentsList.setModel(listModel);
+				fileTypeFlag = "XML";
+			}
+		}catch (IllegalArgumentException e){
+		
+			JOptionPane.showMessageDialog(null,"Import from HTML failed");
+
+		}
+          
 	}
 	
 	
